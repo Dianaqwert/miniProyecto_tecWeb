@@ -43,7 +43,7 @@ function preload ()
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
     //fotogramas del jugador
-    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+    this.load.spritesheet('dude', 'assets/rf1_resized.png', { frameWidth: 32, frameHeight: 80 });
 }
 
 //Se ejecuta al inicio del juego y coloca objetos en pantalla.
