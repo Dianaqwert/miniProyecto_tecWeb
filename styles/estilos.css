@@ -1,0 +1,88 @@
+
+
+*{
+    padding: 0;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/*colores N1*/
+
+:root{
+    --blanco:#FBF8EF;
+    --rosa1:#EC7FA9;
+    --rosa2Claro:#FFEDFA;
+    --rosa2Claro2:#FDB7EA;
+    --rosa3Fuerte:#BE5985;
+    --rosa4fuerte:#AC1754;
+}
+
+
+/*estilos N1*/
+
+
+.fondoN1{
+    background: radial-gradient(circle,var(--rosa2Claro),var(--rosa1), var(--rosa3Fuerte));
+    font-family: "Yuji Mai", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+.contenedor{
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(3,auto);
+    align-items: center;
+    text-align: center;
+    padding: 50px;
+    margin: 20px;
+    background: rgba(255, 255, 255, 0.5); /* Blanco con 50% de transparencia */
+    color:azure;
+    align-items: stretch;
+
+    grid-template-areas: "wid1 wid2 wid3"
+                        "juego juego juego"
+                        "footer footer footer";
+}
+
+.wid1, .wid2, .wid3 {
+    width: 100%;  /* O un tamaño fijo si lo prefieres */
+    height: 180px; /* Ajusta según el tamaño de .wid1 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.wid1, .wid2, .wid3 {
+    min-height: 150px; /* Asegura que todas tengan la misma altura mínima */
+}
+
+.wid1{
+    background-color: var(--rosa4fuerte);
+}
+
+.wid2{
+    background-color: var(--rosa3Fuerte);
+}
+
+.wid3{
+    background-color: var(--rosa1);
+}
+
+.wid1 img {
+    max-width: 80%; 
+    height: auto; 
+}
+
+.juego{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    grid-area: juego; /* Si usas grid-template-areas en tu layout */
+}

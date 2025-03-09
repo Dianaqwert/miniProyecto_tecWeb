@@ -4,6 +4,7 @@ var config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
+    parent: 'phaser-game', // Indica que el juego se renderizará dentro del div con id "phaser-game"
     physics: {
         default: 'arcade',
         arcade: {
