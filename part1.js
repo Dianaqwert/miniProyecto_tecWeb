@@ -1,10 +1,9 @@
-
-//objetos y variables globales
+// Configuración del juego
 var config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    parent: 'phaser-game', // Indica que el juego se renderizará dentro del div con id "phaser-game"
+    parent: 'phaser-game',
     physics: {
         default: 'arcade',
         arcade: {
@@ -12,7 +11,7 @@ var config = {
             debug: false
         }
     },
-    scene: { //se mandaron a llamar a las funciones
+    scene: {
         preload: preload,
         create: create,
         update: update
@@ -27,11 +26,27 @@ var platforms;
 var cursors;
 //puntuaciones
 var score=0;
-var scoreText;
+var scorext;
 var gameOver = false;
+//game over
+var lives = 3;
+var livesIcons = [];
+var gameOver = false;
+
+//regeneracion deplataformas:
+var nextPlatformX = 800;
+
 
 //objeto Phaser.Game
 var game = new Phaser.Game(config);
+
+// Posiciones iniciales de las plataformas
+var platformPositions = [
+    { x: 400, y: 568 },
+    { x: 600, y: 400 },
+    { x: 50, y: 250 },
+    { x: 750, y: 220 }
+];
 
 
 //______________________________FUNCIONES__________________________________________________________________
@@ -47,30 +62,46 @@ function preload ()
     this.load.spritesheet('dude', 'assets/rf1_resized.png', { frameWidth: 32, frameHeight: 80 });
 }
 
-//Se ejecuta al inicio del juego y coloca objetos en pantalla.
-// OJO: cuidado con agregar varias imagenes , van en cascada como en CSS
 function create ()
 {
     //add.image : crea un nuevo elemento de juego de tipo imagen y los añade a la lista de objetos en escena , se vera siempre y cuando este dentro de la region que se definio en la configuración
     this.add.image(400, 300, 'sky');
+    //scroll del fondo para la camara
+    this.add.image(400, 300, 'sky').setScrollFactor(0);
+    
+    //camaras y mundo que se mueve
+    this.physics.world.setBounds(0, 0, 20000, 600); // mundo extenso
+    this.cameras.main.setBounds(0, 0, 20000, 600);
+    
+    //valores de level , lives y score
+    this.data.set('lives', lives);
+    this.data.set('level', 1);  // Puedes cambiar este valor a medida que avances en el juego
+    this.data.set('score', score);
 
     //se utiliza un sistema de fisicas arcade, esto se hace con el objetivo de que phaser sepa que el juego lo requiere.Es un nuevo grupo de elementos estaticos que se asignan a la variable plataforms
     platforms = this.physics.add.staticGroup();
    
-    platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-    // posiciones en : x,y,'nombre de imagen que se utiliza-viene de la funcion de preload()'
-    platforms.create(600, 400, 'ground');
-    platforms.create(50, 250, 'ground');
-    platforms.create(750, 220, 'ground');
 
+    platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+    // Crear plataformas en posiciones predefinidas
+    platformPositions.forEach(pos => {
+        platforms.create(pos.x, pos.y, 'ground');
+    });
+    
     //agregamos el jugador que pertenece al grupo de fisica ya que este sera un objeto que se movera
     player = this.physics.add.sprite(100, 450, 'dude');
 
     //rebote del jugador
     player.setBounce(0.2);
     //colisiona con los limites del juego
-    player.setCollideWorldBounds(true);
+    player.setCollideWorldBounds(false);// Para que pueda salir de los límites y perder vidas
     // cuando aterrice después de saltar, rebotará ligeramente.
+
+    //se crean las vidas
+    for (let i = 0; i < lives; i++) {
+        let heart = this.add.image(650 + i * 40,30, 'star').setScale(1.5).setScrollFactor(0);
+        livesIcons.push(heart);
+    }
 
     //En este código se están haciendo dos cosas: la creación de un Sprite con físicas y algunas animaciones.
 
@@ -116,13 +147,14 @@ function create ()
 
     //ecorre todos los elementos del grupo y le da a cada uno un valor de rebote de Y aleatorio entre 0,4 y 0,8.
     stars.children.iterate(function(child){
-        child.setBounceY(Phaser.Math.FloatBetween(0.4,0.8));
+        child.setBounceY(0);//no rebote
+        child.setVelocityY(0); // Detener el movimiento vertical
     });
 
     bombs = this.physics.add.group();
 
     //PUNTUACION
-    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000',fontFamily: 'Yuji Mai'}).setScrollFactor(0);
 
     //permite que el personaje colisione con las plataformas hay que crear un objeto Collider. Este supervisa si dos objetos físicos (que pueden incluir grupos) colisionan o se superponen entre ellos.
     this.physics.add.collider(player, platforms);
@@ -134,6 +166,9 @@ function create ()
     this.physics.add.overlap(player, stars, collectStar, null, this);
     this.physics.add.collider(player, bombs, hitBomb, null, this);
 
+   
+    this.cameras.main.startFollow(player, true, 0.05, 0.05);
+    cursors = this.input.keyboard.createCursorKeys();
     
 }
 
@@ -168,6 +203,38 @@ function update ()
     {
         player.setVelocityY(-330);
     }
+
+    // Regenerar plataformas y estrellas al avanzar
+    if (player.x > nextPlatformX-400) {// -400 para anticipar un poco la generación
+        regeneratePlatforms();
+        nextPlatformX += 800;
+    }
+
+    //si llega a tocar los limites
+    if (gameOver) return;
+
+    // Verificar si el jugador cae fuera de los límites del mundo
+    if (player.y >750) {
+        perderVida();
+    }
+    
+
+}
+
+function regeneratePlatforms() {
+    platformPositions.forEach(pos => {
+        platforms.create(pos.x + nextPlatformX, pos.y, 'ground');
+    });
+
+    //estrellas:
+    // Generar estrellas en la nueva sección 
+    //enerar cinco estrellas en la nueva sección del juego.
+    for (let i = 0; i <8; i++) { 
+        let starX = Phaser.Math.Between(nextPlatformX, nextPlatformX + 800); // Dentro de la nueva sección
+        let starY = Phaser.Math.Between(100, 400); // Altura aleatoria
+        let star = stars.create(starX, starY, 'star');
+        star.setCollideWorldBounds(false);
+    }
 }
 
 function collectStar (player, star)
@@ -194,6 +261,7 @@ function collectStar (player, star)
 
     }
 }
+
 function hitBomb (player, bomb)
 {
     this.physics.pause();
@@ -203,4 +271,29 @@ function hitBomb (player, bomb)
     player.anims.play('turn');
 
     gameOver = true;
+}
+
+
+function perderVida() {
+    if(gameOver===false){
+        lives--;
+        console.log("aaaaaa"+lives);
+
+        if(lives>=0){
+            livesIcons[lives].setVisible(false);
+            console.log("AAA");
+            player.setX(100); // Reiniciar posición
+            player.setY(450);
+            console.log(lives);
+
+        }else if(lives<0){
+            gameOver=true;
+            console.log("cero");
+        }
+        
+    }
+    if(gameOver===true){
+        alert('perdio');
+        console.log(lives);
+    }
 }
