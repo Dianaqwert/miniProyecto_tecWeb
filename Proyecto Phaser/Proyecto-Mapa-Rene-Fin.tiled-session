@@ -1,0 +1,44 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "exportAsImage.drawTileGrid": false,
+    "exportAsImage.visibleLayersOnly": false,
+    "fileStates": {
+        "CapaBaseNivel.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "CapaNivelRene.tmj": {
+            "scale": 0.125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 3984,
+                "y": 1020
+            }
+        },
+        "G:/6to-Semestre/Web/Phaser-Proyect/Tiled/niv-ren.tsj": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "G:/6to-Semestre/Web/Phaser-Proyect/Proyecto Phaser",
+    "last.imagePath": "D:/Tiled",
+    "map.height": 96,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "json",
+    "map.width": 255,
+    "openFiles": [
+    ],
+    "project": "Proyecto-Mapa-Rene-Fin.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "CapaBaseNivel.json",
+        "CapaNivelRene.tmj"
+    ],
+    "tileset.lastUsedFormat": "json"
+}

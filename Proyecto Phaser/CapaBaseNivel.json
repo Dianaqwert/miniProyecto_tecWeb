@@ -1,0 +1,14 @@
+{ "columns":26,
+ "image":"D:\/Tiled\/bloques.png",
+ "imageheight":389,
+ "imagewidth":843,
+ "margin":0,
+ "name":"CapaBaseNivel",
+ "spacing":0,
+ "tilecount":312,
+ "tiledversion":"1.11.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.10"
+}
