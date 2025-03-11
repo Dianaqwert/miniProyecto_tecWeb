@@ -19,13 +19,14 @@
 
 
 /*estilos N1*/
-
-
 .fondoN1{
-    background: radial-gradient(circle,var(--rosa2Claro),var(--rosa1), var(--rosa3Fuerte));
+    /*background: radial-gradient(circle,var(--rosa2Claro),var(--rosa1), var(--rosa3Fuerte));*/
+    background-image: url('https://i.pinimg.com/736x/ba/80/3c/ba803c18d25bdd9e460003f3904ec3ce.jpg');
     font-family: "Yuji Mai", serif;
     font-weight: 400;
     font-style: normal;
+    background-repeat:initial;
+    background-size: cover;
 }
 
 
@@ -41,10 +42,12 @@
     background: rgba(255, 255, 255, 0.5); /* Blanco con 50% de transparencia */
     color:azure;
     align-items: stretch;
+    border-radius: 20px;
 
     grid-template-areas: "wid1 wid2 wid3"
                         "juego juego juego"
                         "footer footer footer";
+                    
 }
 
 .wid1, .wid2, .wid3 {
@@ -53,6 +56,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 20px;
 
 }
 
@@ -62,14 +66,17 @@
 
 .wid1{
     background-color: var(--rosa4fuerte);
+    grid-area: wid1;
 }
 
 .wid2{
     background-color: var(--rosa3Fuerte);
+    grid-area: wid2;
 }
 
 .wid3{
     background-color: var(--rosa1);
+    grid-area: wid3;
 }
 
 .wid1 img {
