@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrar Jugador en Canvas</title>
+  <style>
+    canvas {
+      border: 1px solid #000;
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="gameCanvas" width="400" height="300"></canvas>
+
+<script>
+  const canvas = document.getElementById("gameCanvas");
+  const ctx = canvas.getContext("2d");
+
+  
+  const button = {
+    x: 100,
+    y: 100,
+    width: 200,
+    height: 50,
+    text: "Registrar Jugador"
+  };
+
+  function drawButton() {
+    ctx.fillStyle = "#007bff"; // Color del botón
+    ctx.fillRect(button.x, button.y, button.width, button.height);
+
+    ctx.fillStyle = "#fff"; // Color del texto
+    ctx.font = "20px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(button.text, button.x + button.width / 2, button.y + button.height / 2);
+  }
+
+  function drawScene() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawButton();
+  }
+  canvas.addEventListener("click", function(event) {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+
+    if (
+      mouseX >= button.x &&
+      mouseX <= button.x + button.width &&
+      mouseY >= button.y &&
+      mouseY <= button.y + button.height
+    ) {
+      registrarJugador();
+    }
+  });
+
+  function registrarJugador() {
+    const id = Date.now(); // Un ID sencillo con el timestamp actual
+    const nickname = prompt("Escribe tu nickname:");
+    const puntuacion = 0;
+    const nivel = 0;
+
+    if (!nickname) {
+      alert("Debes escribir un nickname válido.");
+      return;
+    }
+
+    const jugador = {
+      id: id,
+      nickname: nickname,
+      puntuacion: puntuacion,
+      nivel: nivel
+    };
+
+    localStorage.setItem("jugador", JSON.stringify(jugador));
+    alert("Jugador registrado con éxito!");
+
+    console.log("Jugador guardado:", jugador);
+  }
+
+  drawScene();
+</script>
+
+</body>
+</html>

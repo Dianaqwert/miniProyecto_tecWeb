@@ -1,6 +1,57 @@
 {
+    "activeFile": "proyectoRene.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "ClaseBase.tsx": {
+            "scaleInDock": 1
+        },
+        "Nivel-Rene.json": {
+            "scale": 0.12334449404761905,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 4029.36510330267,
+                "y": 1471.4884632785402
+            }
+        },
+        "Nivel-Rene.tmj": {
+            "scale": 0.12334449404761905,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 4029.36510330267,
+                "y": 1471.4884632785402
+            }
+        },
+        "niv-ren.tsj": {
+            "scaleInDock": 0.75,
+            "scaleInEditor": 1
+        },
+        "proyectoRene.tmx": {
+            "scale": 0.33,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 3301.515151515151,
+                "y": 2283.333333333333
+            }
+        }
+    },
     "last.exportedFilePath": "G:/6to-Semestre/Web/Phaser-Proyect/public/assets",
+    "last.imagePath": "G:/6to-Semestre/Web/Phaser-Proyect/Tiled",
+    "lastUsedTilesetExportFilter": "JSON tileset files (*.tsj *.json)",
     "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
-    "property.type": "bool"
+    "openFiles": [
+        "proyectoRene.tmx",
+        "niv-ren.tsj"
+    ],
+    "project": "entorno-rene.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "niv-ren.tsj",
+        "proyectoRene.tmx",
+        "Nivel-Rene.tmj",
+        "Nivel-Rene.json"
+    ],
+    "tileset.lastUsedFormat": "json"
 }
