@@ -1,0 +1,104 @@
+
+
+*{
+    padding: 0;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/*colores N1*/
+
+:root{
+    --blanco:#FBF8EF;
+    --negro :#000000;
+    --rosa2Claro:#FFEDFA;
+    --rosa2Claro2:#1a0a1a;
+    --rosa3Fuerte:#979797;
+    --rosa4fuerte:#010512;
+}
+.contenedor img {
+    width: 30%;
+    height: auto;
+    object-fit: contain;
+  }
+  
+/*estilos N1*/
+.fondoN1{
+    /*background: radial-gradient(circle,var(--rosa2Claro),var(--negro), var(--rosa3Fuerte));*/
+    background-image: url('https://i.pinimg.com/736x/ba/80/3c/ba803c18d25bdd9e460003f3904ec3ce.jpg');
+    font-family: "Yuji Mai", serif;
+    font-weight: 400;
+    font-style: normal;
+    background-repeat:initial;
+    background-size: cover;
+}
+
+.contenedor {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, auto);
+    align-items: center;
+    text-align: center;
+    padding: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    color: azure;
+    align-items: stretch;
+    border-radius: 20px;
+    grid-template-areas: "wid1 wid2 wid3"
+                        "juego juego juego"
+                        "footer footer footer";
+  }
+
+
+#gameCanvas{
+    margin-bottom: 15%;
+}
+
+  .canvas-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: auto;
+    margin: 0 auto;
+    grid-area: juego; /* Si usas grid-template-areas en tu layout */
+}
+
+.wid1, .wid2, .wid3 {
+    width: 100%;  /* O un tamaño fijo si lo prefieres */
+    height: 180px; /* Ajusta según el tamaño de .wid1 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+
+}
+
+.wid1, .wid2, .wid3 {
+    min-height: 150px; /* Asegura que todas tengan la misma altura mínima */
+}
+
+.wid1{
+    background-color: var(--rosa4fuerte);
+    grid-area: wid1;
+}
+
+.wid2{
+    background-color: var(--rosa3Fuerte);
+    grid-area: wid2;
+}
+
+.wid3{
+    background-color: var(--negro);
+    grid-area: wid3;
+}
+
+.wid1 img {
+    max-width: 80%; 
+    height: auto; 
+}
