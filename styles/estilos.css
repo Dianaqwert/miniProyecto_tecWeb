@@ -18,7 +18,7 @@
 /* Estilo de drag and drop */
 
 .fondo_min{
-    background-image: url('https://cdn.pixabay.com/photo/2021/02/02/15/35/minecraft-5974404_1280.jpg');
+    background-image: url('https://img.freepik.com/vector-gratis/pink-pixel-cuadrado-mosaico-fondo-diseno-grafico-geometrico-vector-cuadrados-colores_1164-1134.jpg?t=st=1741985804~exp=1741989404~hmac=a890e81b72edbb9fe7a013c105982dad4475ee008dd19573a0ddb6d8a2144cd5&w=826');
     font-family: "Tiny5", sans-serif;
     margin: 0;
     padding: 0;
@@ -158,14 +158,15 @@ input{
     font-family: "Tiny5", sans-serif;
     font-size: 5.2rem;
     padding: 20px;
-    background-color: yellow;
+    background-color:var(--rosa2Claro);
     border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 #botonListo:hover {
-    background-color: #11ea1c;  /* Cambia el color de fondo cuando el puntero pasa sobre el botón */
+    background-color:var(--rosa1);  /* Cambia el color de fondo cuando el puntero pasa sobre el botón */
+    color:var(--rosa2Claro);
 }
 
 /*estilos N1*/
@@ -252,3 +253,31 @@ input{
     transform: translateY(50px); 
 }
 
+/*ESTILOS DEL CANVAS DEL INICIO*/
+canvas {
+    border: 1px solid #000;
+    display: block;
+    margin: auto;
+  }
+  #nicknameInput {
+    position: absolute;
+    display: none;
+    font-size: 16px;
+    padding: 5px;
+    border: 1px solid #000;
+    border-radius: 5px;
+  }
+  #errorMsg {
+    color: red;
+    font-size: 14px;
+    display: none;
+    position: absolute;
+    width: 250px;
+    text-align: center;
+  }
+  .container {
+    position: relative;
+    width: 1500px;
+    margin: auto;
+    padding-top: 15px;
+  }
