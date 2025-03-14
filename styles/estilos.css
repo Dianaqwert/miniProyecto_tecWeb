@@ -1,9 +1,7 @@
 
-
 *{
     padding: 0;
     margin: 0;
-    font-size: 1.5rem;
 }
 
 /*colores N1*/
@@ -17,10 +15,169 @@
     --rosa4fuerte:#AC1754;
 }
 
+/* Estilo de drag and drop */
+
+.fondo_min{
+    background-image: url('https://cdn.pixabay.com/photo/2021/02/02/15/35/minecraft-5974404_1280.jpg');
+    font-family: "Tiny5", sans-serif;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    display: grid;
+}
+
+.contenedorInicio {
+    height: auto; 
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(3, 1fr); /* Dos columnas */
+    grid-template-rows: auto auto 1fr auto; /* Asegura que el contenido se acomode correctamente */
+    align-items: center;
+    text-align: center;
+    padding: 14px;
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.5); /* Blanco con 50% de transparencia */
+    color: azure;
+    border-radius: 20px;
+    font-size: 1.5rem;
+    align-items: stretch;
+    grid-template-areas: 
+        "titulo_1 titulo_1 titulo_1"
+        "cu1 dragSeleccion cu2"
+        "btn1 btn1 btn1"; /* Los botones se colocan en la fila inferior */
+}
+
+.titulo_1, .cu1, .cu2, .btn1, .dragSeleccion {
+    width: 100%;  /* O un tamaño fijo si lo prefieres */
+    height: 150px; /* Ajusta según el tamaño de .wid1 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+}
+
+.dragSeleccion {
+    background-color: aliceblue;
+    /* Esto ya está centrado con el grid */
+}
+
+.titulo_1, .cu1, .cu2, .btn1{
+    min-height: 150px; /* Asegura que todas tengan la misma altura mínima */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+}
+
+.btn1{
+    background-color:black;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    grid-area: btn1;
+    
+}
+
+button{
+    transition: transform 0.3s ease;
+    cursor:pointer;
+}
+
+button:hover{
+    transform: scale(1.1);
+}
+.btn1 button{
+   width: 100%;
+   height: 100%;
+   border: none; /* Elimina el borde predeterminado */
+   padding: 0; /* Elimina el padding */
+   background: none; /* Elimina el fondo del botón */
+   display: flex; /* Usamos flexbox para centrar la imagen dentro del botón */
+   justify-content: center; /* Centra la imagen horizontalmente */
+   align-items: center; /* Centra la imagen verticalmente */
+}
+
+/* Estilo para la imagen */
+.btn1 button img {
+    width: 100%; /* La imagen ocupa el 100% del tamaño del botón */
+    height: 100%; /* La imagen ocupa el 100% del tamaño del botón */
+    object-fit: contain; /* Asegura que la imagen se ajuste al botón sin deformarse */
+ }
+
+.titulo_1 {
+    background-color: black;
+    grid-area: titulo_1;
+}
+
+.cu2 {
+    background-color: var(--rosa3Fuerte);
+    grid-area: cu2;
+}
+
+.cu1 {
+    background-color: var(--rosa1);
+    grid-area: cu1;
+}
+
+/* Recuadros */
+#div1, #div2, #dragSeleccion {
+    width: 210px;
+    height: 210px;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 800px;
+    display: flex;
+    align-items: center;
+    background-color: black;
+    justify-content: center; /* Centra el contenido dentro del div */
+    justify-self: center; /* Centra el div dentro de la celda */
+}
+
+/* Estilo para las imágenes dentro de drag1 y dragSeleccion */
+#div1 img, #dragSeleccion img {
+    width: 100%;  /* Ajusta el tamaño de la imagen dentro del contenedor */
+    height: 100%; /* Ajusta el tamaño de la imagen dentro del contenedor */
+    object-fit: contain; /* Asegura que la imagen se mantenga dentro del contenedor sin distorsionarse */
+    display: block; /* Elimina cualquier espacio extra debajo de la imagen */
+}
+
+#div2 img, #dragSeleccion img {
+    width: 100%;  /* Ajusta el tamaño de la imagen dentro del contenedor */
+    height: 100%; /* Ajusta el tamaño de la imagen dentro del contenedor */
+    object-fit: contain; /* Asegura que la imagen se mantenga dentro del contenedor sin distorsionarse */
+    display: block; /* Elimina cualquier espacio extra debajo de la imagen */
+}
+
+#dragSeleccion{
+    background-color:rgba(255, 255, 255, 0.5);
+    border-width: 20px;
+}
+
+input{
+    font-family: "Tiny5", sans-serif;
+    font-size: 5.2rem;
+    padding: 20px;
+    background-color: yellow;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#botonListo:hover {
+    background-color: #11ea1c;  /* Cambia el color de fondo cuando el puntero pasa sobre el botón */
+}
 
 /*estilos N1*/
+.contenedor img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+  
+
 .fondoN1{
-    /*background: radial-gradient(circle,var(--rosa2Claro),var(--rosa1), var(--rosa3Fuerte));*/
+    background: radial-gradient(circle,var(--rosa2Claro),var(--negro), var(--rosa3Fuerte));
     background-image: url('https://i.pinimg.com/736x/ba/80/3c/ba803c18d25bdd9e460003f3904ec3ce.jpg');
     font-family: "Yuji Mai", serif;
     font-weight: 400;
@@ -32,9 +189,9 @@
 
 .contenedor{
     display: grid;
-    grid-gap: 20px;
+    grid-gap: 30px;
     grid-template-columns: repeat(3,1fr);
-    grid-template-rows: repeat(3,auto);
+    grid-template-rows:auto auto auto;
     align-items: center;
     text-align: center;
     padding: 50px;
@@ -42,22 +199,20 @@
     background: rgba(255, 255, 255, 0.5); /* Blanco con 50% de transparencia */
     color:azure;
     align-items: stretch;
-    border-radius: 20px;
 
-    grid-template-areas: "wid1 wid2 wid3"
-                        "juego juego juego"
-                        "footer footer footer";
-                    
+    grid-template-areas: 
+        "wid1 wid2 wid3"
+        "juego juego juego"
+        "footer footer footer";
 }
 
 .wid1, .wid2, .wid3 {
     width: 100%;  /* O un tamaño fijo si lo prefieres */
-    height: 180px; /* Ajusta según el tamaño de .wid1 */
+    height: 50px; /* Ajusta según el tamaño de .wid1 */
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 20px;
-
 }
 
 .wid1, .wid2, .wid3 {
@@ -66,30 +221,34 @@
 
 .wid1{
     background-color: var(--rosa4fuerte);
-    grid-area: wid1;
 }
 
 .wid2{
     background-color: var(--rosa3Fuerte);
-    grid-area: wid2;
 }
 
 .wid3{
     background-color: var(--rosa1);
-    grid-area: wid3;
 }
 
 .wid1 img {
-    max-width: 80%; 
+    max-width: 100%; 
     height: auto; 
 }
 
-.juego{
+.juego {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: auto;
-    margin: 0 auto;
-    grid-area: juego; /* Si usas grid-template-areas en tu layout */
+    height: 500px;     /* o el tamaño deseado */
+    grid-area: juego;
 }
+
+#phaser-game canvas{
+    width:100%;
+    height:100%;
+    object-fit: contain;
+    transform: translateY(50px); 
+}
+
