@@ -1,12 +1,9 @@
 
-const sizes = {
-    width: 1500,
-    height: 800 
-}
 
-class GameScene extends Phaser.Scene {
+
+export default class Part2 extends Phaser.Scene {
     constructor() {
-        super("scene-game");
+        super({ key: 'Part2' });
         this.jugador = null;
         this.cursors = null;
         this.vidas = 3;
@@ -14,10 +11,12 @@ class GameScene extends Phaser.Scene {
         this.puntaje = 0; // Inicializa el puntaje
         this.intentosSaltoEnemigo = 0; // Contador de intentos de salto del enemigo
         this.direccionEnemigo = 1; // 1 para derecha, -1 para izquierda
-        
+        this.suena = true;
+        this.btnPausa = document.getElementById('btnPausa');
     }
 
     preload() {
+        this.load.audio('musicaFondo', '/assets/pop.mp3');
         this.load.image("bg", "/assets/nivel 2/background.png");
         this.load.spritesheet('jugador', 'assets/nivel 2/shrek2.png', {
             frameWidth: 33, // Ancho de cada frame
@@ -32,6 +31,13 @@ class GameScene extends Phaser.Scene {
     }
 
     create() {
+        btnPausa.addEventListener('click', () => {
+            console.log("Pausa");
+            this.scene.pause(); // Pausar la escena principal
+            this.scene.launch('PauseScene'); // Lanzar la escena de pausa
+        });
+
+        this.musica = this.sound.add('musicaFondo');
         var fondo = this.add.image(0, 0, "bg").setOrigin(0, 0);
         fondo.setScale(0.85); // Escalar el fondo para que se ajuste al mundo
         // fondo.alpha = .15;
@@ -61,7 +67,7 @@ class GameScene extends Phaser.Scene {
         
     
         // Crear jugador y agregar física
-        this.jugador = this.physics.add.sprite(200, 2225, "jugador");
+        this.jugador = this.physics.add.sprite(200, 300, "jugador");
         this.enemigo = this.physics.add.sprite(2048, 2931, "enemigo");
 
         this.enemigo.setCollideWorldBounds(true); // Evita que salga de los límites del juego
@@ -70,7 +76,7 @@ class GameScene extends Phaser.Scene {
 
         this.physics.add.collider(this.jugador, this.enemigo, () => {
             this.jugador.x = 200;
-            this.jugador.y = 2225;
+            this.jugador.y = 300;
             this.vidas--;
         });
 
@@ -119,16 +125,21 @@ class GameScene extends Phaser.Scene {
                 capa5.removeTileAt(tile.x+1, tile.y+1); // Elimina el diamante del mapa
                 capa5.removeTileAt(tile.x-1, tile.y-1); // Elimina el diamante del mapa
                 capa5.removeTileAt(tile.x+1, tile.y-1); // Elimina el diamante del mapa
-                console.log("Puntaje:", this.puntaje); // Muestra el puntaje en la consola
+                this.musica.play({
+                    loop: false,
+                    volume:0.4
+                });
+                console.log("puntaje:", this.puntaje); // Muestra el puntaje en la consola
+            
             }
 
         });
 
         this.physics.add.collider(this.jugador, capa1, (jugador, tile) => {
             if (tile?.properties?.Muerte) {
-
+                this.vidas--;
                 this.jugador.x = 200;
-                this.jugador.y= 2225;
+                this.jugador.y= 300;
 
             }
             if(tile?.properties?.Fin){
@@ -144,22 +155,27 @@ class GameScene extends Phaser.Scene {
     }
 
     update() {
+        
+
         this.moverEnemigo();
         // Reiniciar la velocidad en el eje X antes de asignarla
         if(this.jugador.body.velocity.y < 980 && this.jugador.body.velocity.y > 930){
             console.log("salvado");
         }else if( this.jugador.body.velocity.y > 1200){
-            this.scene.start();
+            this.vidas--;
+            this.jugador.body.velocity.y = 0;
+            this.jugador.x = 200;
+            this.jugador.y= 300;
         }
         this.jugador.setVelocityX(0);
 
         // Movimiento horizontal
         if (this.cursors.left.isDown) {
-            this.jugador.setVelocityX(-1000);
+            this.jugador.setVelocityX(-450);
             this.jugador.anims.play('left', true);
         } 
         else if (this.cursors.right.isDown) {
-            this.jugador.setVelocityX(1000);
+            this.jugador.setVelocityX(450);
             this.jugador.anims.play('right', true);
         } 
         else {
@@ -169,11 +185,10 @@ class GameScene extends Phaser.Scene {
         // Salto
         if ((this.cursors.up.isDown || this.cursors.space.isDown) && this.jugador.body.blocked.down) {
             setTimeout(() => {
-                this.jugador.setVelocityY(-1000);
+                this.jugador.setVelocityY(-450);
             }, 50);
         }
-        
-        
+        this.actualizarHUD();
     }
 
     moverEnemigo() {
@@ -196,23 +211,42 @@ class GameScene extends Phaser.Scene {
             }
         }
     }
-    
-}
 
-const config = {
-    type: Phaser.WEBGL,
-    width: sizes.width,
-    height: sizes.height,
-    canvas: gameCanvas,
- 
-    physics: {
-        default: "arcade",
-        arcade: {
-            gravity: { y: 500 }, // Gravedad para que el jugador caiga
-            debug: false // Habilitar debug para ver hitboxes
+    actualizarHUD(){
+        const vidasContainer = document.getElementById("vidas-container");
+        let text = document.createElement("h1");
+        text.textContent="Vidas";
+        vidasContainer.innerHTML = ""; // Limpiar contenido anterior
+        vidasContainer.appendChild(text);
+        for (let i = 0; i < this.vidas; i++) {
+            let corazon = document.createElement("img");
+            corazon.src = "/assets/corazon.png";
+            vidasContainer.appendChild(corazon);
         }
-    },
-    scene: [GameScene]
+        // Actualizar puntaje
+        document.getElementById("Puntaje").textContent = this.puntaje;
+    }
 }
 
-const game = new Phaser.Game(config);
+
+
+
+const musica = document.getElementById('musica');
+const imagenMusica = document.getElementById('btnMusica');
+let estaSonando = false;
+console.log(imagenMusica);
+
+imagenMusica.addEventListener('click', () => {
+    if (estaSonando) {
+        musica.pause(); // Pausar la música
+        estaSonando = false;
+        console.log("Música pausada");
+    } else {
+        musica.play(); // Reproducir la música
+        estaSonando = true;
+        console.log("Música reproduciéndose");
+    }
+});
+
+
+

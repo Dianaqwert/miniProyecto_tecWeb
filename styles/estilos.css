@@ -17,11 +17,26 @@
     --rosa4fuerte:#AC1754;
 }
 
+#musica{
+    display: none;
+}
 
+
+.canvas-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    height: auto;
+    
+    margin-top: 2%;
+    
+    grid-area: juego; /* Si usas grid-template-areas en tu layout */
+}
 /*estilos N1*/
 .fondoN1{
     /*background: radial-gradient(circle,var(--rosa2Claro),var(--rosa1), var(--rosa3Fuerte));*/
-    background-image: url('https://i.pinimg.com/736x/ba/80/3c/ba803c18d25bdd9e460003f3904ec3ce.jpg');
+    background-image: url('/assets/fondo-nivel2.gif');
     font-family: "Yuji Mai", serif;
     font-weight: 400;
     font-style: normal;
@@ -44,7 +59,7 @@
     align-items: stretch;
     border-radius: 20px;
 
-    grid-template-areas: "wid1 wid2 wid3"
+    grid-template-areas: "wid2 wid1 wid3"
                         "juego juego juego"
                         "footer footer footer";
                     
@@ -69,6 +84,7 @@
     grid-area: wid1;
 }
 
+
 .wid2{
     background-color: var(--rosa3Fuerte);
     grid-area: wid2;
@@ -80,8 +96,8 @@
 }
 
 .wid1 img {
-    max-width: 80%; 
-    height: auto; 
+    width: 200px;
+    height: 200px;
 }
 
 .juego{
@@ -92,4 +108,29 @@
     height: auto;
     margin: 0 auto;
     grid-area: juego; /* Si usas grid-template-areas en tu layout */
+}
+
+
+.hud {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20%;
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(19, 1, 1);
+    grid-area: footer; /* Si usas grid-template-areas en tu layout */
+
+}
+
+#vidas-container img {
+    width: 120px;
+    height: 80px;
+    margin-right: 5px;
+}
+
+#puntaje-container h1{
+    margin-top: -20px;
+    margin-bottom: 30px; /* Ajusta este valor según la separación que desees */
 }

@@ -33,9 +33,20 @@
     background-size: cover;
 }
 
+body {
+    background-image: url("/assets/fondo-nivel2-dia.gif");
+    background-size: cover; /* Ajusta la imagen para cubrir toda la pantalla */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-attachment: fixed; /* Hace que la imagen de fondo se mantenga fija al hacer scroll */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .contenedor {
     display: grid;
     grid-gap: 20px;
+    width: 75%;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, auto);
     align-items: center;
@@ -44,32 +55,33 @@
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 20px;
-    margin-bottom: 50%;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(131, 131, 131, 0.5);
     color: azure;
     align-items: stretch;
     border-radius: 20px;
-    grid-template-areas: "wid1 wid2 wid3"
+    grid-template-areas: "wid1 wid3  wid2"
                         "juego juego juego"
                         "footer footer footer";
   }
 
 
-#gameCanvas{
-    margin-bottom: 15%;
-}
+  #musica{
+    display: none;
+  }
 
   .canvas-container{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80%;
+    
     height: auto;
-    margin: 0 auto;
+    
+    margin-top: 2%;
+    
     grid-area: juego; /* Si usas grid-template-areas en tu layout */
 }
 
-.wid1, .wid2, .wid3 {
+.wid1, .wid2 {
     width: 100%;  /* O un tamaño fijo si lo prefieres */
     height: 180px; /* Ajusta según el tamaño de .wid1 */
     display: flex;
@@ -79,26 +91,58 @@
 
 }
 
-.wid1, .wid2, .wid3 {
+.wid1, .wid2 {
     min-height: 150px; /* Asegura que todas tengan la misma altura mínima */
 }
 
 .wid1{
-    background-color: var(--rosa4fuerte);
+    background-color: rgb(80, 80, 0);
     grid-area: wid1;
 }
 
 .wid2{
+    
     background-color: var(--rosa3Fuerte);
     grid-area: wid2;
 }
 
 .wid3{
-    background-color: var(--negro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     grid-area: wid3;
+}
+
+.wid3 img{
+    width: 250px;
+    height: 250;
 }
 
 .wid1 img {
     max-width: 80%; 
     height: auto; 
+}
+
+.hud {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20%;
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(19, 1, 1);
+    grid-area: footer; /* Si usas grid-template-areas en tu layout */
+
+}
+
+#vidas-container img {
+    width: 80px;
+    height: 80px;
+    margin-right: 5px;
+}
+
+#puntaje-container h1{
+    margin-top: -20px;
+    margin-bottom: 30px; /* Ajusta este valor según la separación que desees */
 }
