@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creditos</title>
+    <!--Estilos-->
+    <link rel="stylesheet" href="/styles/estilos.css">  
+    <!--fuente-->
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
+    <script src="/js/funcionesIntro.js"></script>
+</head>
+<body class="fondo_canvas_1">
+    <div class="contenedor_canvas2">
+        
+        <div class="get1">
+            <img src="/assets/CRDITOS.png">
+        </div>
+
+        <div class="_canva" id="phaser-game">
+            <canvas id="gameCanvas" width="1500" height="700"></canvas>
+            <script>
+                // Obtener el elemento canvas y su contexto 2D
+                const canvas = document.getElementById("gameCanvas");
+                const ctx = canvas.getContext("2d");
+
+                const imagenFondo = new Image();
+                imagenFondo.src = "/assets/imagen3.jpg"; // Reemplaza con la ruta real de tu imagen
+
+                imagenFondo.onload = function() {
+                    ctx.drawImage(imagenFondo, 0, 0, canvas.width, canvas.height);
+                
+                    //imagen2
+                    const imagenSuperior = new Image();
+                    imagenSuperior.src = "/assets/1.png";
+                    imagenSuperior.onload = function(){
+                        ctx.drawImage(imagenSuperior, 300, 100, imagenSuperior.width, imagenSuperior.height);
+                    };
+
+                    //imagen2
+                    const imagenSuperior2 = new Image();
+                    imagenSuperior2.src = "/assets/2.png";
+                    imagenSuperior2.onload = function(){
+                        ctx.drawImage(imagenSuperior2,750, 100, imagenSuperior2.width, imagenSuperior2.height);
+                    };
+                    
+                
+                
+                };
+
+                
+              </script>            
+
+        </div>
+
+        <div class="get2">
+            <div class="btn1">
+                <button id="back" onclick="regresarNormal()">
+                    <img src="/assets/bt1B.png" alt="Imagen del botón" />
+                </button>
+                <button id="next">
+                    <img src="/assets/ntn1.png" alt="Imagen del botón"  onclick="verificarCampos()" />
+                </button>
+            </div>
+        </div>
+
+        
+    </div>
+</body>
+
+</html>

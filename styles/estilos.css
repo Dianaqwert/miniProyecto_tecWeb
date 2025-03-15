@@ -1,9 +1,7 @@
 
-
 *{
     padding: 0;
     margin: 0;
-    font-size: 1.5rem;
 }
 
 /*colores N1*/
@@ -15,6 +13,179 @@
     --rosa2Claro2:#FDB7EA;
     --rosa3Fuerte:#BE5985;
     --rosa4fuerte:#AC1754;
+    --negro:#000000;
+    --verde:#B8D576;
+    --verde2:#B3D8A8;
+}
+
+/*swal//*/
+
+/* Cambia la fuente del título */
+.swal-title {
+    font-family: "Jersey 10", sans-serif; ;
+    font-size: 1.5rem;
+}
+  
+/* Cambia la fuente del texto */
+.swal-text {
+    font-family: "Jersey 10", sans-serif;
+    font-size: 1.5rem;
+
+}
+  
+  /* Cambia la fuente del botón */
+.swal-button {
+    font-family: "Jersey 10", sans-serif;
+    font-size: 1.5rem;
+}
+
+
+/*grid-css*/
+.seleccionSkin {
+    height: auto; 
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto 1fr auto; /* Asegura que el contenido se acomode correctamente */
+    display: center;
+    text-align: center;
+    padding: 14px;
+    margin-top: 20px;
+    color: azure;
+    border-radius: 20px;
+    font-size: 1.5rem;
+    align-items: stretch;
+    grid-template-areas: 
+        "datos titulo_1 titulo_1 titulo_1"
+        "datos cu1 dragSeleccion cu2"
+        "btn1 btn1 btn1 btn1";
+}
+
+.titulo_1, .cu1, .cu2, .btn1, .dragSeleccion, .get1, .get2 {
+    width: 100%;  /* O un tamaño fijo si lo prefieres */
+    height: 130px; /* Ajusta según el tamaño de .wid1 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    font-family: "Jersey 10", sans-serif;
+
+}
+
+.dragSeleccion {
+    background-color: aliceblue;
+    /* Esto ya está centrado con el grid */
+    grid-area: dragSeleccion;
+}
+
+.titulo_1, .cu1, .cu2, .btn1, .get1, .get2{
+    min-height: 130px; /* Asegura que todas tengan la misma altura mínima */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+}
+
+
+.btn1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Para centrar verticalmente si es necesario */
+    background-color: black;
+    grid-area: btn1;
+}
+
+button{
+    transition: transform 0.3s ease;
+    cursor:pointer;
+}
+
+button:hover{
+    transform: scale(1.1);
+}
+
+.btn1 button{
+   width: 100%;
+   height: 100%;
+   border: none; /* Elimina el borde predeterminado */
+   padding: 0; /* Elimina el padding */
+   background: none; /* Elimina el fondo del botón */
+   justify-content:left; /* Centra la imagen horizontalmente */
+}
+
+/* Estilo para la imagen */
+.btn1 button img {
+    width: 100%; /* La imagen ocupa el 100% del tamaño del botón */
+    height: 100%; /* La imagen ocupa el 100% del tamaño del botón */
+    object-fit: contain; /* Asegura que la imagen se ajuste al botón sin deformarse */
+ }
+
+.titulo_1 {
+    background-color:var(--rosa1);
+    font-size: 2.5rem;
+    grid-area: titulo_1;
+}
+
+.cu2 {
+    grid-area: cu2;
+}
+
+.cu1 {
+    grid-area: cu1;
+}
+
+/* Recuadros */
+#div1, #div2, #dragSeleccion {
+    width: 210px;
+    height: 210px;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid var(--rosa1);
+    border-radius: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra el contenido dentro del div */
+    justify-self: center; /* Centra el div dentro de la celda */
+}
+
+/* Estilo para las imágenes dentro de drag1 y dragSeleccion */
+#div1 img, #dragSeleccion img {
+    width: 100%;  /* Ajusta el tamaño de la imagen dentro del contenedor */
+    height: 100%; /* Ajusta el tamaño de la imagen dentro del contenedor */
+    object-fit: contain; /* Asegura que la imagen se mantenga dentro del contenedor sin distorsionarse */
+    display: block; /* Elimina cualquier espacio extra debajo de la imagen */
+}
+
+#div2 img, #dragSeleccion img {
+    width: 100%;  /* Ajusta el tamaño de la imagen dentro del contenedor */
+    height: 100%; /* Ajusta el tamaño de la imagen dentro del contenedor */
+    object-fit: contain; /* Asegura que la imagen se mantenga dentro del contenedor sin distorsionarse */
+    display: block; /* Elimina cualquier espacio extra debajo de la imagen */
+}
+
+#div1{
+    background-color: #D84040;
+}
+
+#div2{
+    background-color:#E53888;
+}
+
+#dragSeleccion{
+    background-color:rgba(255, 255, 255, 0.5);
+    border-width: 20px;
+}
+
+h3{
+    font-family: "Jersey 10", sans-serif;
+}
+
+input{
+    font-size: 2.2rem;
+    padding: 20px;
+    font-family: "Jersey 10", sans-serif;
+    background-color:var(--verde);
+    cursor: pointer;
 }
 
 #musica{
@@ -34,10 +205,21 @@
     grid-area: juego; /* Si usas grid-template-areas en tu layout */
 }
 /*estilos N1*/
+.contenedor img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+  
+
 .fondoN1{
+<<<<<<< HEAD
     /*background: radial-gradient(circle,var(--rosa2Claro),var(--rosa1), var(--rosa3Fuerte));*/
     background-image: url('/assets/fondo-nivel2.gif');
     font-family: "Yuji Mai", serif;
+=======
+    background-image: url('https://i.pinimg.com/736x/ba/80/3c/ba803c18d25bdd9e460003f3904ec3ce.jpg');
+>>>>>>> 8f583686716dc53a2d5fd42ea1681ff307bbfda5
     font-weight: 400;
     font-style: normal;
     background-repeat:initial;
@@ -47,9 +229,9 @@
 
 .contenedor{
     display: grid;
-    grid-gap: 20px;
+    grid-gap: 30px;
     grid-template-columns: repeat(3,1fr);
-    grid-template-rows: repeat(3,auto);
+    grid-template-rows:auto auto auto;
     align-items: center;
     text-align: center;
     padding: 50px;
@@ -57,22 +239,27 @@
     background: rgba(255, 255, 255, 0.5); /* Blanco con 50% de transparencia */
     color:azure;
     align-items: stretch;
-    border-radius: 20px;
 
+<<<<<<< HEAD
     grid-template-areas: "wid2 wid1 wid3"
                         "juego juego juego"
                         "footer footer footer";
                     
+=======
+    grid-template-areas: 
+        "wid1 wid2 wid3"
+        "juego juego juego"
+        "footer footer footer";
+>>>>>>> 8f583686716dc53a2d5fd42ea1681ff307bbfda5
 }
 
 .wid1, .wid2, .wid3 {
     width: 100%;  /* O un tamaño fijo si lo prefieres */
-    height: 180px; /* Ajusta según el tamaño de .wid1 */
+    height: 50px; /* Ajusta según el tamaño de .wid1 */
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 20px;
-
 }
 
 .wid1, .wid2, .wid3 {
@@ -81,35 +268,37 @@
 
 .wid1{
     background-color: var(--rosa4fuerte);
-    grid-area: wid1;
 }
 
 
 .wid2{
     background-color: var(--rosa3Fuerte);
-    grid-area: wid2;
 }
 
 .wid3{
     background-color: var(--rosa1);
-    grid-area: wid3;
 }
 
 .wid1 img {
+<<<<<<< HEAD
     width: 200px;
     height: 200px;
+=======
+    max-width: 100%; 
+    height: auto; 
+>>>>>>> 8f583686716dc53a2d5fd42ea1681ff307bbfda5
 }
 
-.juego{
+.juego {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: auto;
-    margin: 0 auto;
-    grid-area: juego; /* Si usas grid-template-areas en tu layout */
+    height: 500px;     /* o el tamaño deseado */
+    grid-area: juego;
 }
 
+<<<<<<< HEAD
 
 .hud {
     display: flex;
@@ -134,3 +323,108 @@
     margin-top: -20px;
     margin-bottom: 30px; /* Ajusta este valor según la separación que desees */
 }
+=======
+#phaser-game canvas{
+    width:100%;
+    height:100%;
+    object-fit: contain;
+    transform: translateY(50px); 
+}
+
+/*ESTILOS DEL CANVAS DEL INICIO*/
+
+/*,,,,,,,,,,,,,,,,,,,,,,,,,,*/
+.contenedor_canvas{
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:auto 1fr auto;
+    align-items: center;
+    text-align: center;
+    padding: 50px;
+    margin: 20px;
+    background: rgba(255, 255, 255, 0.5); /* Blanco con 50% de transparencia */
+    color:azure;
+    align-items: stretch;
+
+    grid-template-areas: 
+        "get1 get1"
+        "_canva _canva";
+}
+
+.contenedor_canvas2{
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:auto 1fr auto;
+    align-items: center;
+    text-align: center;
+    padding: 50px;
+    margin: 20px;
+    background: rgba(255, 255, 255, 0.5); /* Blanco con 50% de transparencia */
+    color:azure;
+    align-items: stretch;
+
+    grid-template-areas: 
+        "get1 get1"
+        "_canva _canva"
+        "get2 get2";
+}
+._canva{
+    padding-top: 0;
+    grid-area:_canva;
+    transform: translateY(-30px); 
+    width: 100%;
+    height: 500px;
+}
+
+.get1{
+    background-color:var(--negro);   
+    font-size: 3.5rem;
+    grid-area: get1;
+}
+
+.get2{
+    background-color:var(--negro);
+    font-family: "Jersey 10", sans-serif; 
+    font-size: 3.5rem;
+    gap:30px;
+    grid-area: get2;
+}
+
+
+.fondo_canvas_1{
+    background-image: url('https://img.freepik.com/vector-gratis/pink-pixel-cuadrado-mosaico-fondo-diseno-grafico-geometrico-vector-cuadrados-colores_1164-1134.jpg?t=st=1742020826~exp=1742024426~hmac=3181683b58ff8ac411001747237a230f41ee63a1d95a2afd14a20a1588952489&w=826');
+}
+
+.input_1{
+    font-size:1.5rem;
+    width: 200px;
+    cursor:none;
+}
+
+button{
+    font-family: "Jersey 10", sans-serif;
+    font-size: 2.5rem;
+    background-color: var(--verde);
+}
+
+.logo{
+    height:410px;
+}
+
+.datos{
+    gap:20px;
+    display: block;
+    text-align:center;
+    background-color: var(--verde2);
+    grid-area: datos;
+}
+
+
+.btn2{
+    margin-top: 20px;
+}
+
+
+>>>>>>> 8f583686716dc53a2d5fd42ea1681ff307bbfda5
