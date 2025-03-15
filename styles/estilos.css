@@ -13,69 +13,86 @@
     --rosa2Claro2:#FDB7EA;
     --rosa3Fuerte:#BE5985;
     --rosa4fuerte:#AC1754;
+    --negro:#000000;
+    --verde:#B8D576;
+    --verde2:#B3D8A8;
 }
 
-/* Estilo de drag and drop */
+/*swal//*/
 
-.fondo_min{
-    background-image: url('https://img.freepik.com/vector-gratis/pink-pixel-cuadrado-mosaico-fondo-diseno-grafico-geometrico-vector-cuadrados-colores_1164-1134.jpg?t=st=1741985804~exp=1741989404~hmac=a890e81b72edbb9fe7a013c105982dad4475ee008dd19573a0ddb6d8a2144cd5&w=826');
-    font-family: "Tiny5", sans-serif;
-    margin: 0;
-    padding: 0;
-    justify-content: center;
-    align-items: center;
-    display: grid;
+/* Cambia la fuente del título */
+.swal-title {
+    font-family: "Jersey 10", sans-serif; ;
+    font-size: 1.5rem;
+}
+  
+/* Cambia la fuente del texto */
+.swal-text {
+    font-family: "Jersey 10", sans-serif;
+    font-size: 1.5rem;
+
+}
+  
+  /* Cambia la fuente del botón */
+.swal-button {
+    font-family: "Jersey 10", sans-serif;
+    font-size: 1.5rem;
 }
 
-.contenedorInicio {
+
+/*grid-css*/
+.seleccionSkin {
     height: auto; 
     display: grid;
     grid-gap: 20px;
-    grid-template-columns: repeat(3, 1fr); /* Dos columnas */
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto auto 1fr auto; /* Asegura que el contenido se acomode correctamente */
-    align-items: center;
+    display: center;
     text-align: center;
     padding: 14px;
     margin-top: 20px;
-    background: rgba(255, 255, 255, 0.5); /* Blanco con 50% de transparencia */
     color: azure;
     border-radius: 20px;
     font-size: 1.5rem;
     align-items: stretch;
     grid-template-areas: 
-        "titulo_1 titulo_1 titulo_1"
-        "cu1 dragSeleccion cu2"
-        "btn1 btn1 btn1"; /* Los botones se colocan en la fila inferior */
+        "datos titulo_1 titulo_1 titulo_1"
+        "datos cu1 dragSeleccion cu2"
+        "btn1 btn1 btn1 btn1";
 }
 
-.titulo_1, .cu1, .cu2, .btn1, .dragSeleccion {
+.titulo_1, .cu1, .cu2, .btn1, .dragSeleccion, .get1, .get2 {
     width: 100%;  /* O un tamaño fijo si lo prefieres */
-    height: 150px; /* Ajusta según el tamaño de .wid1 */
+    height: 130px; /* Ajusta según el tamaño de .wid1 */
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 20px;
+    font-family: "Jersey 10", sans-serif;
+
 }
 
 .dragSeleccion {
     background-color: aliceblue;
     /* Esto ya está centrado con el grid */
+    grid-area: dragSeleccion;
 }
 
-.titulo_1, .cu1, .cu2, .btn1{
-    min-height: 150px; /* Asegura que todas tengan la misma altura mínima */
+.titulo_1, .cu1, .cu2, .btn1, .get1, .get2{
+    min-height: 130px; /* Asegura que todas tengan la misma altura mínima */
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 20px;
 }
 
-.btn1{
-    background-color:black;
-    justify-content: center; /* Centrado horizontal */
-    align-items: center; /* Centrado vertical */
+
+.btn1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Para centrar verticalmente si es necesario */
+    background-color: black;
     grid-area: btn1;
-    
 }
 
 button{
@@ -86,15 +103,14 @@ button{
 button:hover{
     transform: scale(1.1);
 }
+
 .btn1 button{
    width: 100%;
    height: 100%;
    border: none; /* Elimina el borde predeterminado */
    padding: 0; /* Elimina el padding */
    background: none; /* Elimina el fondo del botón */
-   display: flex; /* Usamos flexbox para centrar la imagen dentro del botón */
-   justify-content: center; /* Centra la imagen horizontalmente */
-   align-items: center; /* Centra la imagen verticalmente */
+   justify-content:left; /* Centra la imagen horizontalmente */
 }
 
 /* Estilo para la imagen */
@@ -105,17 +121,16 @@ button:hover{
  }
 
 .titulo_1 {
-    background-color: black;
+    background-color:var(--rosa1);
+    font-size: 2.5rem;
     grid-area: titulo_1;
 }
 
 .cu2 {
-    background-color: var(--rosa3Fuerte);
     grid-area: cu2;
 }
 
 .cu1 {
-    background-color: var(--rosa1);
     grid-area: cu1;
 }
 
@@ -125,11 +140,10 @@ button:hover{
     height: 210px;
     margin: 5px;
     padding: 5px;
-    border: 1px solid black;
+    border: 1px solid var(--rosa1);
     border-radius: 800px;
     display: flex;
     align-items: center;
-    background-color: black;
     justify-content: center; /* Centra el contenido dentro del div */
     justify-self: center; /* Centra el div dentro de la celda */
 }
@@ -149,25 +163,31 @@ button:hover{
     display: block; /* Elimina cualquier espacio extra debajo de la imagen */
 }
 
+#div1{
+    background-color: #D84040;
+}
+
+#div2{
+    background-color:#E53888;
+}
+
 #dragSeleccion{
     background-color:rgba(255, 255, 255, 0.5);
     border-width: 20px;
 }
 
-input{
-    font-family: "Tiny5", sans-serif;
-    font-size: 5.2rem;
-    padding: 20px;
-    background-color:var(--rosa2Claro);
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+h3{
+    font-family: "Jersey 10", sans-serif;
 }
 
-#botonListo:hover {
-    background-color:var(--rosa1);  /* Cambia el color de fondo cuando el puntero pasa sobre el botón */
-    color:var(--rosa2Claro);
+input{
+    font-size: 2.2rem;
+    padding: 20px;
+    font-family: "Jersey 10", sans-serif;
+    background-color:var(--verde);
+    cursor: pointer;
 }
+
 
 /*estilos N1*/
 .contenedor img {
@@ -178,9 +198,7 @@ input{
   
 
 .fondoN1{
-    background: radial-gradient(circle,var(--rosa2Claro),var(--negro), var(--rosa3Fuerte));
     background-image: url('https://i.pinimg.com/736x/ba/80/3c/ba803c18d25bdd9e460003f3904ec3ce.jpg');
-    font-family: "Yuji Mai", serif;
     font-weight: 400;
     font-style: normal;
     background-repeat:initial;
@@ -254,30 +272,98 @@ input{
 }
 
 /*ESTILOS DEL CANVAS DEL INICIO*/
-canvas {
-    border: 1px solid #000;
-    display: block;
-    margin: auto;
-  }
-  #nicknameInput {
-    position: absolute;
-    display: none;
-    font-size: 16px;
-    padding: 5px;
-    border: 1px solid #000;
-    border-radius: 5px;
-  }
-  #errorMsg {
-    color: red;
-    font-size: 14px;
-    display: none;
-    position: absolute;
-    width: 250px;
+
+/*,,,,,,,,,,,,,,,,,,,,,,,,,,*/
+.contenedor_canvas{
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:auto 1fr auto;
+    align-items: center;
     text-align: center;
-  }
-  .container {
-    position: relative;
-    width: 1500px;
-    margin: auto;
-    padding-top: 15px;
-  }
+    padding: 50px;
+    margin: 20px;
+    background: rgba(255, 255, 255, 0.5); /* Blanco con 50% de transparencia */
+    color:azure;
+    align-items: stretch;
+
+    grid-template-areas: 
+        "get1 get1"
+        "_canva _canva";
+}
+
+.contenedor_canvas2{
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:auto 1fr auto;
+    align-items: center;
+    text-align: center;
+    padding: 50px;
+    margin: 20px;
+    background: rgba(255, 255, 255, 0.5); /* Blanco con 50% de transparencia */
+    color:azure;
+    align-items: stretch;
+
+    grid-template-areas: 
+        "get1 get1"
+        "_canva _canva"
+        "get2 get2";
+}
+._canva{
+    padding-top: 0;
+    grid-area:_canva;
+    transform: translateY(-30px); 
+    width: 100%;
+    height: 500px;
+}
+
+.get1{
+    background-color:var(--negro);   
+    font-size: 3.5rem;
+    grid-area: get1;
+}
+
+.get2{
+    background-color:var(--negro);
+    font-family: "Jersey 10", sans-serif; 
+    font-size: 3.5rem;
+    gap:30px;
+    grid-area: get2;
+}
+
+
+.fondo_canvas_1{
+    background-image: url('https://img.freepik.com/vector-gratis/pink-pixel-cuadrado-mosaico-fondo-diseno-grafico-geometrico-vector-cuadrados-colores_1164-1134.jpg?t=st=1742020826~exp=1742024426~hmac=3181683b58ff8ac411001747237a230f41ee63a1d95a2afd14a20a1588952489&w=826');
+}
+
+.input_1{
+    font-size:1.5rem;
+    width: 200px;
+    cursor:none;
+}
+
+button{
+    font-family: "Jersey 10", sans-serif;
+    font-size: 2.5rem;
+    background-color: var(--verde);
+}
+
+.logo{
+    height:410px;
+}
+
+.datos{
+    gap:20px;
+    display: block;
+    text-align:center;
+    background-color: var(--verde2);
+    grid-area: datos;
+}
+
+
+.btn2{
+    margin-top: 20px;
+}
+
+
