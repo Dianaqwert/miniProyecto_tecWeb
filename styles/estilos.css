@@ -1,10 +1,8 @@
-
 *{
     padding: 0;
     margin: 0;
 }
 
-/*colores N1*/
 
 :root{
     --blanco:#FBF8EF;
@@ -18,7 +16,6 @@
     --verde2:#B3D8A8;
 }
 
-/*swal//*/
 
 /* Cambia la fuente del título */
 .swal-title {
@@ -40,7 +37,6 @@
 }
 
 
-/*grid-css*/
 .seleccionSkin {
     height: auto; 
     display: grid;
@@ -188,23 +184,7 @@ input{
     cursor: pointer;
 }
 
-#musica{
-    display: none;
-}
 
-
-.canvas-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    height: auto;
-    
-    margin-top: 2%;
-    
-    grid-area: juego; /* Si usas grid-template-areas en tu layout */
-}
-/*estilos N1*/
 .contenedor img {
     width: 100%;
     height: auto;
@@ -213,13 +193,7 @@ input{
   
 
 .fondoN1{
-<<<<<<< HEAD
-    /*background: radial-gradient(circle,var(--rosa2Claro),var(--rosa1), var(--rosa3Fuerte));*/
-    background-image: url('/assets/fondo-nivel2.gif');
-    font-family: "Yuji Mai", serif;
-=======
     background-image: url('https://i.pinimg.com/736x/ba/80/3c/ba803c18d25bdd9e460003f3904ec3ce.jpg');
->>>>>>> 8f583686716dc53a2d5fd42ea1681ff307bbfda5
     font-weight: 400;
     font-style: normal;
     background-repeat:initial;
@@ -240,17 +214,10 @@ input{
     color:azure;
     align-items: stretch;
 
-<<<<<<< HEAD
-    grid-template-areas: "wid2 wid1 wid3"
-                        "juego juego juego"
-                        "footer footer footer";
-                    
-=======
     grid-template-areas: 
         "wid1 wid2 wid3"
         "juego juego juego"
         "footer footer footer";
->>>>>>> 8f583686716dc53a2d5fd42ea1681ff307bbfda5
 }
 
 .wid1, .wid2, .wid3 {
@@ -270,7 +237,6 @@ input{
     background-color: var(--rosa4fuerte);
 }
 
-
 .wid2{
     background-color: var(--rosa3Fuerte);
 }
@@ -280,13 +246,8 @@ input{
 }
 
 .wid1 img {
-<<<<<<< HEAD
-    width: 200px;
-    height: 200px;
-=======
     max-width: 100%; 
     height: auto; 
->>>>>>> 8f583686716dc53a2d5fd42ea1681ff307bbfda5
 }
 
 .juego {
@@ -298,32 +259,6 @@ input{
     grid-area: juego;
 }
 
-<<<<<<< HEAD
-
-.hud {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20%;
-    margin-top: 20px;
-    font-size: 24px;
-    font-weight: bold;
-    color: rgb(19, 1, 1);
-    grid-area: footer; /* Si usas grid-template-areas en tu layout */
-
-}
-
-#vidas-container img {
-    width: 120px;
-    height: 80px;
-    margin-right: 5px;
-}
-
-#puntaje-container h1{
-    margin-top: -20px;
-    margin-bottom: 30px; /* Ajusta este valor según la separación que desees */
-}
-=======
 #phaser-game canvas{
     width:100%;
     height:100%;
@@ -331,9 +266,8 @@ input{
     transform: translateY(50px); 
 }
 
-/*ESTILOS DEL CANVAS DEL INICIO*/
 
-/*,,,,,,,,,,,,,,,,,,,,,,,,,,*/
+
 .contenedor_canvas{
     display: grid;
     grid-gap: 30px;
@@ -425,6 +359,3 @@ button{
 .btn2{
     margin-top: 20px;
 }
-
-
->>>>>>> 8f583686716dc53a2d5fd42ea1681ff307bbfda5
