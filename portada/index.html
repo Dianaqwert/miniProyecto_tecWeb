@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Menú del Juego</title>
+  <style>
+    canvas {
+      border: 1px solid #000;
+      display: block;
+      margin: auto;
+    }
+    #nicknameInput {
+      position: absolute;
+      display: none;
+      font-size: 16px;
+      padding: 5px;
+      border: 1px solid #000;
+      border-radius: 5px;
+    }
+    #errorMsg {
+      color: red;
+      font-size: 14px;
+      display: none;
+      position: absolute;
+      width: 250px;
+      text-align: center;
+    }
+    .container {
+      position: relative;
+      width: 1500px;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <canvas id="gameCanvas" width="1500" height="700"></canvas>
+  <input type="text" id="nicknameInput" placeholder="Escribe tu nickname" />
+  <div id="errorMsg">El nickname debe tener entre 4 y 8 caracteres y solo letras/números.</div>
+</div>
+
+<script>
+  const canvas = document.getElementById("gameCanvas");
+  const ctx = canvas.getContext("2d");
+  const input = document.getElementById("nicknameInput");
+  const errorMsg = document.getElementById("errorMsg");
+
+  // Imagen de fondo
+  let background = new Image();
+  background.src = "portada.jpeg";
+
+  // Botones
+  const buttons = [
+    { x: 650, y: 250, width: 200, height: 50, text: "Jugar", action: "play" },
+    { x: 650, y: 320, width: 200, height: 50, text: "Instrucciones", action: "instructions" },
+    { x: 650, y: 390, width: 200, height: 50, text: "Records", action: "records" },
+    { x: 650, y: 460, width: 200, height: 50, text: "Créditos", action: "credits" }
+  ];
+
+  let currentJugador = null;
+
+  background.onload = function () {
+    drawScene();
+  };
+
+  function drawScene() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+    buttons.forEach(button => {
+      ctx.fillStyle = "#007bff";
+      ctx.fillRect(button.x, button.y, button.width, button.height);
+
+      ctx.fillStyle = "#fff";
+      ctx.font = "20px Arial";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(button.text, button.x + button.width / 2, button.y + button.height / 2);
+    });
+    
+//imprime el jugador en pantalla (esta condicion será borrada despues, fue utilizada solo para comprobar que las validaciones funcionan)
+    if (currentJugador) {
+      ctx.fillStyle = "#333";
+      ctx.font = "22px Arial";
+      ctx.fillText("Jugador: " + currentJugador.nickname, canvas.width / 2, 50);
+      ctx.fillText("Fecha Registro: " + currentJugador.fechaRegistro, canvas.width / 2, 80);
+      ctx.fillText("Puntuación: " + currentJugador.puntuacion, canvas.width / 2, 110);
+      ctx.fillText("Nivel: " + currentJugador.nivel, canvas.width / 2, 140);
+    }
+  }
+
+  function showInput() {
+    const rect = canvas.getBoundingClientRect();
+    input.style.display = "block";
+    input.style.width = "180px";
+    input.style.left = (rect.left + 650 + 10) + "px";
+    input.style.top = (rect.top + 250 + 60) + "px";
+
+    errorMsg.style.display = "none";
+    errorMsg.style.left = input.style.left;
+    errorMsg.style.top = (parseInt(input.style.top) + 30) + "px";
+
+    input.focus();
+  }
+
+  function hideInput() {
+    input.style.display = "none";
+    errorMsg.style.display = "none";
+  }
+
+  function validarNickname(nick) {
+    const regex = /^[a-zA-Z0-9]{4,8}$/;
+    return regex.test(nick);
+  }
+
+  canvas.addEventListener("click", function(event) {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+
+    for (let button of buttons) {
+      if (
+        mouseX >= button.x &&
+        mouseX <= button.x + button.width &&
+        mouseY >= button.y &&
+        mouseY <= button.y + button.height
+      ) {
+        if (button.action === "play") {
+          showInput();
+        } else {
+          console.log(`Botón ${button.text} presionado (sin función aún)`);
+        }
+      }
+    }
+  });
+
+  input.addEventListener("input", function() {
+    if (validarNickname(input.value.trim())) {
+      errorMsg.style.display = "none";
+    }
+  });
+
+  input.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      const newNickname = input.value.trim();
+      if (validarNickname(newNickname)) {
+        registrarJugador(newNickname);
+        input.value = "";
+        hideInput();
+        drawScene();
+      } else {
+        errorMsg.style.display = "block";
+      }
+    }
+  });
+
+  function obtenerFechaActual() {
+    const hoy = new Date();
+    const año = hoy.getFullYear();
+    const mes = String(hoy.getMonth() + 1).padStart(2, "0");
+    const dia = String(hoy.getDate()).padStart(2, "0");
+    return `${año}-${mes}-${dia}`;
+  }
+
+  function registrarJugador(nick) {
+    let jugadores = JSON.parse(localStorage.getItem("jugadores")) || [];
+
+    let jugadorExistente = jugadores.find(j => j.nickname === nick);
+    if (jugadorExistente) {
+      jugadorExistente.nivel = 0;
+      jugadorExistente.fechaRegistro = obtenerFechaActual();
+      console.log("Jugador actualizado:", jugadorExistente);
+    } else {
+      const nuevoJugador = {
+        nickname: nick,
+        puntuacion: 0,
+        nivel: 0,
+        fechaRegistro: obtenerFechaActual()
+      };
+      jugadores.push(nuevoJugador);
+      console.log("Nuevo jugador registrado:", nuevoJugador);
+      jugadorExistente = nuevoJugador;
+    }
+
+    localStorage.setItem("jugadores", JSON.stringify(jugadores));
+    currentJugador = jugadorExistente;
+  }
+
+  drawScene();
+</script>
+
+</body>
+</html>
