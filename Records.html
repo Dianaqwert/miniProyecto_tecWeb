@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/estilos.css">  
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@900&display=swap" rel="stylesheet">
+    <title>Records</title>
+</head>
+<body class="fondo_canvas_1">
+    <div class="contenedor_canvas2">
+        <div class="get1">
+            <img src="/assets/Records-.png">
+        </div>
+
+        <div class="_canva" id="phaser-game">
+            <canvas id="gameCanvas" width="1500" height="700"></canvas>
+            <script>
+                // Obtener el elemento canvas y su contexto 2D
+                const canvas = document.getElementById("gameCanvas");
+                const ctx = canvas.getContext("2d");
+
+                const imagenFondo = new Image();
+                imagenFondo.src = "/assets/imagen3.jpg"; 
+
+                imagenFondo.onload = function() {
+                    ctx.drawImage(imagenFondo, 0, 0, canvas.width, canvas.height);
+                    mostrarTablaRecords(); // Llamar a la función para dibujar la tabla
+                };
+
+                function mostrarTablaRecords() {
+                    // Obtener datos de Local Storage
+                    let records = JSON.parse(localStorage.getItem("records")) || [];
+
+                    // Ordenar por puntuación de mayor a menor
+                    records.sort((a, b) => b.puntuacion - a.puntuacion);
+
+                    // Definir posiciones
+                    let x = 450;
+                    let y = 150;
+                    let rowHeight = 50;
+
+                    // Estilos generales
+                    ctx.font = "bold 28px Doto, sans-serif";
+                    ctx.textAlign = "center";
+
+                    // Dibujar encabezados con fondo resaltado
+                    ctx.fillStyle = "#F5F5DC"; // Dorado
+                    ctx.fillRect(x - 100, y - 35, 700, 50);
+                    ctx.fillStyle = "black";
+                    ctx.fillText("Nombre", x, y);
+                    ctx.fillText("Puntuación", x + 250, y);
+                    ctx.fillText("Fecha", x + 500, y);
+
+                    // Dibujar línea divisoria
+                    ctx.beginPath();
+                    ctx.moveTo(x - 100, y + 10);
+                    ctx.lineTo(x + 600, y + 10);
+                    ctx.stroke();
+
+                    // Dibujar los datos con filas alternas
+                    ctx.font = "25px Doto, sans-serif";
+                    y += rowHeight;
+
+                    if (records.length === 0) {
+                        ctx.fillText("No hay registros disponibles", canvas.width / 2, y);
+                    } else {
+                        records.forEach((record, index) => {
+                            // Alternar colores de filas
+                            ctx.fillStyle = index % 2 === 0 ? "#F0F0F0" : "#E0E0E0";
+                            ctx.fillRect(x - 100, y - 30, 700, 40);
+                            
+                            // Texto en negro
+                            ctx.fillStyle = "black";
+                            ctx.fillText(record.nombre, x, y);
+                            ctx.fillText(record.puntuacion, x + 250, y);
+                            ctx.fillText(record.fecha, x + 500, y);
+                            
+                            y += rowHeight;
+                        });
+                    }
+                }
+            </script>            
+        </div>
+
+        <div class="get2">
+            <div class="btn1">
+                <button id="back" onclick="regresarNormal()">
+                    <img src="/assets/bt1B.png" alt="Imagen del botón" />
+                </button>
+                <button id="next">
+                    <img src="/assets/ntn1.png" alt="Imagen del botón" onclick="verificarCampos()" />
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
