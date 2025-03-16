@@ -235,7 +235,7 @@ function verificarPersonaje(){
             icon: "success",
             button: "Ok",
         });
-        window.location.href = 'instruccionesN1.html'; //otro index
+        window.location.href = 'inst_juego_N1.html'; //otro index
     }else{
         swal({
             title:"Error",

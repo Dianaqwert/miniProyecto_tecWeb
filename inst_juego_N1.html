@@ -25,6 +25,11 @@
                     <img src="/assets/bAtras.png" alt="Imagen del botón" />
                 </button>
             </div>
+            <div class="btn1">
+                <button id="back" onclick="iniciarJuego1()">
+                    <img src="/assets/bSig.png" alt="Imagen del botón" />
+                </button>
+            </div>
         </div>
     </div>
 </body>
@@ -93,8 +98,14 @@
         }
 
     };
+    //funcion de retorno
     function regresarNormal(){
         history.back();
+    }
+
+    //funcionde inicio del juego
+    function iniciarJuego1(){
+        window.location.href = 'nivel1.html';
     }
 </script>            
 </html>
