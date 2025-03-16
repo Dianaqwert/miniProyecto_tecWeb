@@ -1,4 +1,21 @@
 
+// Función para encontrar al jugador activo
+function obtenerJugadorActivo() {
+    // Obtener los jugadores del localStorage
+    const jugadores = JSON.parse(localStorage.getItem("jugadores")) || [];
+
+    // Buscar al jugador con el campo "activo" en true
+    const jugadorActivo = jugadores.find(jugador => jugador.activo === true);
+
+    // Verificar si se encontró un jugador activo
+    if (jugadorActivo) {
+        console.log("Jugador activo encontrado:", jugadorActivo);
+    } else {
+        console.log("No hay jugadores activos.");
+    }
+    console.log(jugadorActivo.alias)
+    return jugadorActivo;
+}
 
 
 export default class Part2 extends Phaser.Scene {
@@ -13,6 +30,8 @@ export default class Part2 extends Phaser.Scene {
         this.direccionEnemigo = 1; // 1 para derecha, -1 para izquierda
         this.suena = true;
         this.btnPausa = document.getElementById('btnPausa');
+        this.jugadorActivo = obtenerJugadorActivo();
+
     }
 
     preload() {
@@ -143,7 +162,38 @@ export default class Part2 extends Phaser.Scene {
 
             }
             if(tile?.properties?.Fin){
-                this.scene.restart(); // Reinicia la escena
+                document.getElementById("gameCanvas").style.display = "none";
+                this.scene.pause(); // Pausar la escena principal
+
+                 // Mostrar el nuevo canvas
+                 const canvas = document.getElementById("imagenCanvas");
+                 canvas.style.display = "block";
+                 const ctx = canvas.getContext("2d");
+             
+                 // Ajustar tamaño si no se define en CSS
+                 canvas.width = 800; // Ajusta según el tamaño que necesites
+                 canvas.height = 600;
+             
+                 // Ocultar elementos HUD
+                 
+                 document.getElementById("nombre-container").style.display = "none";
+                 document.getElementById("vidas-container").style.display = "none";
+                 document.getElementById("btnPausa").style.display = "none";
+             
+                 // Crear y cargar la imagen
+                 const imagen = new Image();
+                 imagen.src = "/assets/felicidades.png"; // Verifica que esta ruta es correcta
+                 console.log("Cargando imagen desde:", imagen.src);
+             
+                 imagen.onload = function () {
+                     console.log("Imagen cargada correctamente");
+                     ctx.drawImage(imagen, 0, 0, canvas.width, canvas.height);
+                 };
+             
+                 imagen.onerror = function () {
+                     console.error("Error al cargar la imagen. Verifica la ruta:", imagen.src);
+                 };
+                 this.guardarInfo();
             }
 
         });
@@ -152,6 +202,40 @@ export default class Part2 extends Phaser.Scene {
         // Capturar teclas de movimiento
         this.cursors = this.input.keyboard.createCursorKeys();
         this.cursors.space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); // Tecla de espacio para saltar
+    }
+
+    guardarInfo(){
+        document.getElementById("puntaje-container").textContent ="Puntuaje final "+this.puntaje;
+
+        const guardarJugador = {
+            alias: this.jugadorActivo ,
+            fecha: new Date().toLocaleDateString("es-ES").replace(/\//g, "-"),
+            vidas: 3,
+            nivelJuego: 2,
+            puntuacionNivel1: this.puntaje,
+            puntuacionNivel2:0,
+            trofeos: this.trofeos,
+            skin: this.jugadorActivo.skin,
+            intentos: this.jugadorActivo.intentos,
+            activo: false
+        };
+
+        const jugadores = JSON.parse(localStorage.getItem("jugadores")) || [];
+
+    // Buscar al jugador activo
+        const jugadorActivoIndex = jugadores.findIndex(jugador => jugador.activo === true);
+
+        if (jugadorActivoIndex !== -1) {
+            // Actualizar la información del jugador activo
+            jugadores[jugadorActivoIndex] = { ...jugadores[jugadorActivoIndex], ...guardarJugador };
+
+            // Guardar los cambios en el localStorage
+            localStorage.setItem("jugadores", JSON.stringify(jugadores));
+
+            console.log("Información del jugador activo actualizada correctamente:", jugadores[jugadorActivoIndex]);
+        } else {
+            console.log("No se encontró un jugador activo.");
+        }
     }
 
     update() {
@@ -171,11 +255,11 @@ export default class Part2 extends Phaser.Scene {
 
         // Movimiento horizontal
         if (this.cursors.left.isDown) {
-            this.jugador.setVelocityX(-450);
+            this.jugador.setVelocityX(-1500);
             this.jugador.anims.play('left', true);
         } 
         else if (this.cursors.right.isDown) {
-            this.jugador.setVelocityX(450);
+            this.jugador.setVelocityX(1500);
             this.jugador.anims.play('right', true);
         } 
         else {
@@ -185,7 +269,7 @@ export default class Part2 extends Phaser.Scene {
         // Salto
         if ((this.cursors.up.isDown || this.cursors.space.isDown) && this.jugador.body.blocked.down) {
             setTimeout(() => {
-                this.jugador.setVelocityY(-450);
+                this.jugador.setVelocityY(-1500);
             }, 50);
         }
         this.actualizarHUD();
@@ -213,22 +297,49 @@ export default class Part2 extends Phaser.Scene {
     }
 
     actualizarHUD(){
-        const vidasContainer = document.getElementById("vidas-container");
-        let text = document.createElement("h1");
-        text.textContent="Vidas";
-        vidasContainer.innerHTML = ""; // Limpiar contenido anterior
-        vidasContainer.appendChild(text);
-        for (let i = 0; i < this.vidas; i++) {
-            let corazon = document.createElement("img");
-            corazon.src = "/assets/corazon.png";
-            vidasContainer.appendChild(corazon);
+        if(this.vidas == 0){
+            document.getElementById("gameCanvas").style.display = "none";
+            this.scene.pause(); // Pausar la escena principal
+
+            const canvas = document.getElementById("imagenPerder");
+            canvas.style.display = "block";
+            const ctx = canvas.getContext("2d");
+        
+            // Ajustar el tamaño del canvas si es necesario
+            canvas.width = 1500; // Ajusta según el tamaño que necesites
+            canvas.height = 700;
+        
+            // Ocultar los elementos del HUD
+            document.getElementById("puntaje-container").style.display = "none";
+            document.getElementById("nombre-container").style.display = "none";
+            document.getElementById("vidas-container").style.display = "none";
+            document.getElementById("btnPausa").style.display = "none";
+            // Cargar y dibujar la imagen
+            const imagen = new Image();
+            imagen.src = "/assets/gameover.png"; // Ruta de la imagen
+            imagen.onload = function () {
+                ctx.drawImage(imagen, 0, 0, canvas.width, canvas.height);
+            };
+        }else{
+            const vidasContainer = document.getElementById("vidas-container");
+            let text = document.createElement("h1");
+            text.textContent="Vidas";
+            vidasContainer.innerHTML = ""; // Limpiar contenido anterior
+            vidasContainer.appendChild(text);
+            for (let i = 0; i < this.vidas; i++) {
+                let corazon = document.createElement("img");
+                corazon.src = "/assets/corazon.png";
+                vidasContainer.appendChild(corazon);
+            }
+            // Actualizar puntaje
+            document.getElementById("Puntaje").textContent = this.puntaje;
+            document.getElementById("Nombre").textContent = this.jugadorActivo.alias;
         }
-        // Actualizar puntaje
-        document.getElementById("Puntaje").textContent = this.puntaje;
     }
+
+    
+
 }
-
-
 
 
 const musica = document.getElementById('musica');
@@ -247,6 +358,3 @@ imagenMusica.addEventListener('click', () => {
         console.log("Música reproduciéndose");
     }
 });
-
-
-

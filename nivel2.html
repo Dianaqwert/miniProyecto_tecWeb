@@ -3,50 +3,53 @@
   <head>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js"></script>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles/estilos-niv-2.css">
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
     <title>Apple Catcher</title>
   </head>
-  <body >
+  <body>
     <audio id="musica" loop>
       <source src="/assets/musica.wav" type="audio/wav">
     </audio>
 
     <section class="contenedor">
       <div class="wid1">
-        <h1> NIVEL 2</h1>
+        <h1>NIVEL 2</h1>
       </div>
       <div class="wid3">
         <img src="/assets/nivel-2logo.png">
-    </div>
+      </div>
       <div class="wid2">
-        <h1> Una aventura en la noche</h1>
+        <h1>Una aventura en la noche</h1>
       </div>  
-      <!-- Sección de Vidas y Puntaje -->
+
+      <!-- Canvas del juego -->
       <div class="canvas-container">
         <canvas id="gameCanvas"></canvas>
       </div>
 
-      
-  
+      <!-- Canvas para la imagen -->
+      <div class="imagenCanva">
+          <canvas id="imagenCanvas" style="display: none;"></canvas>
+      </div>
+      <div class="imagenPerd">
+        <canvas id="imagenPerder" style="display: none;"></canvas>
+    </div>
+
+      <!-- HUD -->
       <div class="hud">
         <div id="puntaje-container"><h1>Puntaje:</h1><p id="Puntaje">0</p></div>
+        <div id="vidas-container">Vidas:</div>
+        <div id="nombre-container"><h1>Jugador:</h1><p id="Nombre"></p></div>
 
-        <div id="vidas-container">Vidas: </div>
-        <div>Jugador</div>
         <div>
-          <img id="btnMusica" src="/assets/sonido-desactivado.png" alt="Controlar Musica" style="cursor: pointer;">
-          <img id="btnPausa" src="/assets/settings.png"lt="Controlar Musica" style="cursor: pointer;" >
+          <img id="btnMusica" src="/assets/sonido-desactivado.png" alt="Controlar Música" style="cursor: pointer;">
+          <img id="btnPausa" src="/assets/settings.png" alt="Configurar" style="cursor: pointer;">
         </div>
       </div>
-
     </section>
 
-    
-
-    <script id="scene" type="module" src="js/settings.js" data-scene="Part2"></script>
+    <script id="scene" type="module" src="js/setts.js" data-scene="Part2"></script>
 </body>
-  
-  
 </html>
