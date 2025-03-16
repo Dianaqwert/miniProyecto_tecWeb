@@ -56,7 +56,7 @@ function jugar() {
         });
 
         // Inserta o actualiza el h3 vacío debajo del botón con el alias del jugador
-        document.querySelector('.datos h3:last-child').textContent = `Alias: ${jugadorExistente.alias}`;
+        document.querySelector('.datos p').textContent = `Alias: ${jugadorExistente.alias}\nFecha: ${jugadorExistente.fecha}`;
         acciones(jugadorExistente);
 
 
@@ -87,8 +87,7 @@ function jugar() {
         });
         
         // Inserta o actualiza el h3 vacío con el alias del nuevo jugador
-        document.querySelector('.datos h3:last-child').textContent = `Alias: ${nuevoJugador.alias}`;
-
+        document.querySelector('.datos p').textContent = `Alias: ${nuevoJugador.alias}\nFecha: ${nuevoJugador.fecha}`;
         acciones(nuevoJugador);
     }
 
@@ -191,8 +190,11 @@ setData("text", ev.target.id) → Método que almacena datos para recuperarlos d
             personaje = data;
             if(data==="drag1a"){
                 jugadorExistente.skin=1;
+                document.querySelector('.datos p').textContent = `Alias: ${jugadorExistente.alias} Fecha: ${jugadorExistente.fecha}\nSkin:${jugadorExistente.skin}`;
+                
             }else if(data==="drag1b"){
                 jugadorExistente.skin=2;
+                document.querySelector('.datos p').textContent = `Alias: ${jugadorExistente.alias}\nFecha: ${jugadorExistente.fecha}\nSkin:${jugadorExistente.skin}`;
             }
             console.log("Seleccionado: " + data);
             // Guardar los cambios en localStorage
@@ -238,7 +240,7 @@ function verificarPersonaje(){
             icon: "success",
             button: "Ok",
         });
-        window.location.href = 'nivel1.html'; //otro index
+        window.location.href = 'instruccionesN1.html'; //otro index
     }else{
         swal({
             title:"Error",
@@ -258,11 +260,8 @@ function regresarNormal(){
 
 function verificarCampos(){
     // Obtener el nombre ingresado y eliminar espacios extra
-    const botonListo=document.getElementById('botonListo');
     const nombrePlayer = document.getElementById("nombrePlayer").value.trim();
     const dragSelection = document.getElementById("dragSeleccion");
-
-   
     if(!nombrePlayer ||  dragSelection.children.length === 0){
         swal({
             title: "Error",
@@ -271,5 +270,4 @@ function verificarCampos(){
             button: "Ok",
         });
     }
-    
 }

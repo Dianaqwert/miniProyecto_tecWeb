@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/estilos.css">  
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@900&display=swap" rel="stylesheet">
+    <title></title>
+</head>
+<body class="fondo_canvas_1">
+    <div class="contenedor_canvas2">
+        <div class="get1">
+            <img src="/assets/instN1_.png">
+        </div>
+
+        <div class="_canva" id="phaser-game">
+            <canvas id="gameCanvas" width="1500" height="700"></canvas>
+        </div>
+
+        <div class="get2">
+            <div class="btn1">
+                <button id="back" onclick="regresarNormal()">
+                    <img src="/assets/bAtras.png" alt="Imagen del botón" />
+                </button>
+                <button id="next">
+                    <img src="/assets/bSig.png" alt="Imagen del botón" />
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // Obtener el elemento canvas y su contexto 2D
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const imagenFondo = new Image();
+    imagenFondo.src = "/assets/imagen3.jpg"; 
+
+    imagenFondo.onload = function() {
+        ctx.drawImage(imagenFondo, 0, 0, canvas.width, canvas.height);
+
+        // Texto de la primera imagen
+        const texto1 = [
+            "      Controles:",
+            "Para moverte utiliza",
+            "las flechas de tu teclado.",
+            "",
+            "Para saltar utiliza la tecla",
+            "espacio de tu teclado.",
+            "",
+            "      Objetivos del nivel 1:",
+            "Tu objetivo es llegar al",
+            "portal de salida recolectando",
+            "la mayor cantidad de fresitas",
+            "",
+            "Ten cuidado con la lava y",
+            "de no caerte de las",
+            "plataformas.",
+            "Recolecta los tesoros",
+            "para obtener mas puntos."
+        ];
+
+        // Primera imagen (Izquierda)
+        const imagenIzquierda = new Image();
+        imagenIzquierda.src = "/assets/CL.jpg";
+
+        imagenIzquierda.onload = function() {
+            ctx.drawImage(imagenIzquierda, 309, 120, imagenIzquierda.width, imagenIzquierda.height);
+            dibujarTexto(texto1, 350, 160);
+        };
+
+        // Primera imagen (derecha)
+        const imagenDerecha = new Image();
+        imagenDerecha.src = "/assets/inst_1_.png";
+
+        imagenDerecha.onload = function() {
+            ctx.drawImage(imagenDerecha, 800, 50, imagenDerecha.width, imagenDerecha.height);
+
+        };
+
+        
+        // Función para dibujar texto
+        function dibujarTexto(texto, x, y) {
+            ctx.font = "20px Doto, sans-serif";
+            ctx.fillStyle = "black";
+            ctx.textAlign = "left"; 
+            const lineHeight = 25;
+
+            texto.forEach(linea => {
+                ctx.fillText(linea, x, y);
+                y += lineHeight;
+            });
+        }
+
+    };
+    function regresarNormal(){
+        history.back();
+    }
+</script>            
+</html>
