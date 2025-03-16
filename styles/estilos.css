@@ -174,6 +174,13 @@ button:hover{
 
 h3{
     font-family: "Jersey 10", sans-serif;
+    color:#000000;
+}
+
+p{
+    font-family: "Jersey 10", sans-serif;
+    font-size: 2.5rem;
+    color:var(--rosa4fuerte);
 }
 
 input{
@@ -304,6 +311,7 @@ input{
         "_canva _canva"
         "get2 get2";
 }
+
 ._canva{
     padding-top: 0;
     grid-area:_canva;
@@ -358,4 +366,41 @@ button{
 
 .btn2{
     margin-top: 20px;
+<<<<<<< HEAD
 }
+
+/*estilos de las instrucciones*/
+._canva.botones_ {
+    display: flex;           /* Activa Flexbox */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;     /* Centra verticalmente */
+    gap: 20px;               /* Espaciado entre botones */
+}
+
+._canva.botones_ button {
+    font-size: 24px;   /* Tamaño de texto grande */
+    padding: 15px 30px; /* Espaciado interno */
+    cursor: pointer;   /* Cursor de mano */
+    height: 400px;
+    width: 750px;
+}
+
+/*instrucciones generales*/
+
+.opcN_1{
+    background-image: url('/assets/n1_canva.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color:var(--negro);
+}
+
+.opcN_2{
+    background-image: url('/assets/n2_canva.jpg');
+    color:var(--verde2);
+    background-repeat: no-repeat;
+    background-size: cover
+
+}
+=======
+}
+>>>>>>> 891d0586ee6e5d476f23a989e9e17afad0ff3182

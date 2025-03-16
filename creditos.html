@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/styles/estilos.css">  
     <!--fuente-->
     <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
-    <script src="/js/funcionesIntro.js"></script>
+    
 </head>
 <body class="fondo_canvas_1">
     <div class="contenedor_canvas2">
@@ -44,8 +44,6 @@
                         ctx.drawImage(imagenSuperior2,750, 100, imagenSuperior2.width, imagenSuperior2.height);
                     };
                     
-                
-                
                 };
 
                 
@@ -56,16 +54,18 @@
         <div class="get2">
             <div class="btn1">
                 <button id="back" onclick="regresarNormal()">
-                    <img src="/assets/bt1B.png" alt="Imagen del botón" />
-                </button>
-                <button id="next">
-                    <img src="/assets/ntn1.png" alt="Imagen del botón"  onclick="verificarCampos()" />
+                    <img src="/assets/bAtras.png" alt="Imagen del botón" />
                 </button>
             </div>
         </div>
 
         
     </div>
+    <script>
+        function regresarNormal(){
+            history.back();
+        }
+    </script>
 </body>
 
 </html>
