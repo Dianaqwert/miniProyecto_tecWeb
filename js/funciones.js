@@ -106,7 +106,6 @@ function acciones(jugadorExistente) {
     const img1 = document.getElementById("drag1a");
     const img2 = document.getElementById("drag1b");
     const dragSelection = document.getElementById("dragSeleccion");
-    const botonListo=document.getElementById('botonListo');
 
     const back=document.getElementById('back');
     const next=document.getElementById('next');
@@ -147,8 +146,6 @@ function acciones(jugadorExistente) {
     dragSelection.addEventListener("dragenter", dragEnter);
     dragSelection.addEventListener("dragleave", dragLeave);
 
-    //asignamos al boton de listo
-    botonListo.addEventListener("click",verificarCampos);
     //__________________________________________4) ACCIONES DE LAS FUNCIONES __________________________________________
 
 /*OJO :ev -  es el objeto del evento que ocurre al arrastrar o soltar un elemento.
@@ -207,8 +204,6 @@ setData("text", ev.target.id) → Método que almacena datos para recuperarlos d
         
         ev.target.appendChild(draggedElement);
         
-        // (Opcional) asignar el evento al botón 'botonListo'
-        botonListo.addEventListener("click", verificarPersonaje);
     }
 
     // Evento cuando el elemento arrastrado entra en el área de destino
