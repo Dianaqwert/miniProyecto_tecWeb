@@ -4,38 +4,27 @@
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles/estilos-niv-2.css">
+    <link rel="stylesheet" href="/styles/estilos-niv-1.css">  
     <link rel="icon" type="image/png" href="/assets/favicon.png">
-    <title>Apple Catcher</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
   </head>
-  <body>
+  <body class="fondoN1 bt">
     <audio id="musica" loop>
       <source src="/assets/musica.wav" type="audio/wav">
     </audio>
 
     <section class="contenedor">
+      
       <div class="wid1">
-        <h1>NIVEL 2</h1>
+        <img src="/assets/STRAW-BERRYSHORTCAKE (1).png">
       </div>
-      <div class="wid3">
-        <img src="/assets/nivel-2logo.png">
-      </div>
-      <div class="wid2">
-        <h1>Una aventura en la noche</h1>
-      </div>  
 
       <!-- Canvas del juego -->
-      <div class="canvas-container">
+      <div class="canvas-container"  id="phaser-game">
         <canvas id="gameCanvas"></canvas>
-      </div>
-
-      <!-- Canvas para la imagen -->
-      <div class="imagenCanva">
-          <canvas id="imagenCanvas" style="display: none;"></canvas>
-      </div>
-      <div class="imagenPerd">
+        <canvas id="imagenCanvas" style="display: none;"></canvas>
         <canvas id="imagenPerder" style="display: none;"></canvas>
-    </div>
+      </div>
 
       <!-- HUD -->
       <div class="hud">
@@ -43,11 +32,22 @@
         <div id="vidas-container">Vidas:</div>
         <div id="nombre-container"><h1>Jugador:</h1><p id="Nombre"></p></div>
 
-        <div>
+        <div class="musica_a">
           <img id="btnMusica" src="/assets/sonido-desactivado.png" alt="Controlar Música" style="cursor: pointer;">
           <img id="btnPausa" src="/assets/settings.png" alt="Configurar" style="cursor: pointer;">
         </div>
       </div>
+
+      <div class="btn1">
+        <button id="back" onclick="regresarNormal()">
+            <img src="/assets/_atras_15_3_2025 (1).png" alt="Imagen del botón" />
+        </button>
+
+        <button id="next" onclick="verificarCampos()">
+            <img src="/assets/bSig.png" alt="Imagen del botón"/>
+        </button>
+      </div>
+
     </section>
 
     <script id="scene" type="module" src="js/setts.js" data-scene="Part2"></script>

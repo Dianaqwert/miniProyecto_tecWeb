@@ -8,7 +8,7 @@ const sceneName = scriptTag.getAttribute("data-scene");
 
 const sizes = {
     width: 1500,
-    height: 700
+    height:800
 };
 
 // Crear el juego sin definir una escena inicial

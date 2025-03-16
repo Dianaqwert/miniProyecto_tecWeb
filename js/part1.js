@@ -273,7 +273,7 @@ export default class Part1 extends Phaser.Scene {
         
             // Ajustar el tamaño del canvas si es necesario
             canvas.width = 1500; // Ajusta según el tamaño que necesites
-            canvas.height = 700;
+            canvas.height = 800;
         
             // Ocultar los elementos del HUD
             document.getElementById("puntaje-container").style.display = "none";
