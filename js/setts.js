@@ -13,7 +13,7 @@ const sizes = {
 
 // Crear el juego sin definir una escena inicial
 const config = {
-    type: Phaser.WEBGL,
+    type: Phaser.canvas,
     width: sizes.width,
     height: sizes.height,
     canvas: gameCanvas,
@@ -35,5 +35,3 @@ game.scene.add("Part2", Part2);
 game.scene.add("PauseScene", PauseScene);
 
 game.scene.start(`${sceneName}`);
-
-

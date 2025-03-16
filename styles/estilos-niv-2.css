@@ -146,3 +146,19 @@ body {
     margin-top: -20px;
     margin-bottom: 30px; /* Ajusta este valor según la separación que desees */
 }
+
+.imagenCanva{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+    grid-area: juego; /* Si usas grid-template-areas en tu layout */
+}
+
+.imagenPerd{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+    grid-area: juego;
+}

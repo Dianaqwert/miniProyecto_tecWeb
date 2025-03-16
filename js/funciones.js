@@ -1,10 +1,13 @@
 
 const jugadores = JSON.parse(localStorage.getItem("jugadores")) || []; //localstorage
+
+
 var elegido = false;
 var personaje = null;
 //PARTE DE LAS VALIDACIONES DEL NOMBRE Y REGISTROS 
 // Verifica si hay jugadores en el localStorage, si no, inicializa como un array vacío
 function jugar() {
+    desactivarJugadores();
     // Obtener el nombre ingresado y eliminar espacios extra
     const nombrePlayer = document.getElementById("nombrePlayer").value.trim();
 
@@ -48,6 +51,7 @@ function jugar() {
         var fechaAct=new Date();
         jugadorExistente.fecha=fechaAct.toLocaleDateString("es-ES").replace(/\//g,"-");
         jugadorExistente.intentos += 1;
+        jugadorExistente.activo = true;
         swal({
             title: `Bienvenido de nuevo ${jugadorExistente.alias}`,
             text: `Tu fecha ha sido actualizada. Intentos: ${jugadorExistente.intentos}`,
@@ -67,14 +71,13 @@ function jugar() {
             fecha: new Date().toLocaleDateString("es-ES").replace(/\//g, "-"),
             vidas: 3,
             nivelJuego: 1,
-            puntuacionNivel: 0,
-            puntuacionTotalintento: 0,
-            puntuacionAnteriorIntento: 0,
-            puntuacionObtenidaActual: 0,
-            premiosN1: 0,
+            puntuacionNivel1:0,
+            puntuacionNivel2:0,
+            trofeos: 0,
             gameOver: false,
             skin:0,
-            intentos: 1
+            intentos: 1,
+            activo:true
         };
 
         // Guardarlo en la lista de jugadores
@@ -95,6 +98,21 @@ function jugar() {
     localStorage.setItem("jugadores", JSON.stringify(jugadores));
     console.log("Lista actualizada de jugadores:", jugadores);
 
+}
+
+function desactivarJugadores() {
+    // Obtener los jugadores del localStorage
+    const jugadores = JSON.parse(localStorage.getItem("jugadores")) || [];
+
+    // Actualizar el campo "activo" de todos los jugadores a false
+    const jugadoresActualizados = jugadores.map(jugador => {
+        return { ...jugador, activo: false }; // Usamos spread operator para crear un nuevo objeto con activo en false
+    });
+
+    // Guardar los cambios en el localStorage
+    localStorage.setItem("jugadores", JSON.stringify(jugadoresActualizados));
+
+    console.log("Todos los jugadores han sido desactivados.");
 }
 
 //SELECCION DE SKIN
