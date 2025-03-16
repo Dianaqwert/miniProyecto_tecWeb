@@ -19,7 +19,7 @@
 
 /* Cambia la fuente del título */
 .swal-title {
-    font-family: "Jersey 10", sans-serif; ;
+    font-family: "Jersey 10", sans-serif; 
     font-size: 1.5rem;
 }
   
@@ -77,8 +77,6 @@
 .titulo_1, .cu1, .cu2, .btn1, .get1, .get2{
     min-height: 130px; /* Asegura que todas tengan la misma altura mínima */
     display: flex;
-    justify-content: center;
-    align-items: center;
     border-radius: 20px;
 }
 
@@ -317,7 +315,7 @@ input{
     grid-area:_canva;
     transform: translateY(-30px); 
     width: 100%;
-    height: 500px;
+    height: 600px;
 }
 
 .get1{
@@ -366,7 +364,6 @@ button{
 
 .btn2{
     margin-top: 20px;
-<<<<<<< HEAD
 }
 
 /*estilos de las instrucciones*/
@@ -401,6 +398,4 @@ button{
     background-size: cover
 
 }
-=======
-}
->>>>>>> 891d0586ee6e5d476f23a989e9e17afad0ff3182
+

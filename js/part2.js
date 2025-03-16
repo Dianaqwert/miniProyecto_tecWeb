@@ -31,6 +31,7 @@ export default class Part2 extends Phaser.Scene {
         this.suena = true;
         this.btnPausa = document.getElementById('btnPausa');
         this.jugadorActivo = obtenerJugadorActivo();
+        this.tesoro=0;
 
     }
 
@@ -41,12 +42,15 @@ export default class Part2 extends Phaser.Scene {
             frameWidth: 33, // Ancho de cada frame
             frameHeight: 89 // Altura de cada frame
         });
+        this.load.spritesheet('otra-skin', 'assets/rosita.png', {
+            frameWidth: 33, // Ancho de cada frame
+            frameHeight: 89 // Altura de cada frame
+        });
         
         this.load.spritesheet('enemigo', 'assets/nivel 2/shrek2.png', {
             frameWidth: 33, // Ancho de cada frame
             frameHeight: 89 // Altura de cada frame
-        });
-        this.load.image("bloques", "assets/nivel 2/bloques.png");
+        });        this.load.image("bloques", "assets/nivel 2/bloques.png");
         this.load.tilemapTiledJSON('tilemap', 'assets/nivel 2/nivelRene.json');
         this.puntaje = 0; // Inicializa el puntaje
 
@@ -59,6 +63,7 @@ export default class Part2 extends Phaser.Scene {
             this.scene.launch('PauseScene'); // Lanzar la escena de pausa
         });
 
+        
         this.musica = this.sound.add('musicaFondo');
         var fondo = this.add.image(0, 0, "bg").setOrigin(0, 0);
         fondo.setScale(0.85); // Escalar el fondo para que se ajuste al mundo
@@ -85,11 +90,21 @@ export default class Part2 extends Phaser.Scene {
         capa3.setCollisionByProperty({ Colision: false });
         capa4.setCollisionByProperty({ Colision: false });
         capa5.setCollisionByProperty({ Diamante: true });
+        capa5.setCollisionByProperty({ Perla : true });
+
         
         
     
         // Crear jugador y agregar física
-        this.jugador = this.physics.add.sprite(200, 300, "jugador");
+        if (this.jugadorActivo.skin == 1) {
+            console.log("Skin 1");
+            this.jugador = this.physics.add.sprite(200, 200, "jugador");
+            this.crearAnimaciones('jugador'); // Crear animaciones para la skin 1
+        } else {
+            console.log("Skin 2");
+            this.jugador = this.physics.add.sprite(200, 200, "otra-skin");
+            this.crearAnimaciones('otra-skin'); // Crear animaciones para la skin 2
+        }
         this.enemigo = this.physics.add.sprite(2048, 2931, "enemigo");
 
         this.enemigo.setCollideWorldBounds(true); // Evita que salga de los límites del juego
@@ -114,44 +129,22 @@ export default class Part2 extends Phaser.Scene {
         // Ajustar cámara para seguir al jugador y establecer límites
         this.cameras.main.setBounds(0, 0, 8040, 3128);
        this.cameras.main.startFollow(this.jugador);
-    
-        // Crear animaciones del jugador
-        this.anims.create({
-            key: 'left',
-            frames: this.anims.generateFrameNumbers('jugador', { start: 0, end: 3 }),
-            frameRate: 10,
-            repeat: -1
-        });
-    
-        this.anims.create({
-            key: 'turn',
-            frames: [{ key: 'jugador', frame: 4 }],
-            frameRate: 20
-        });
-    
-        this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers('jugador', { start: 5, end: 8 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        
 
-        this.anims.create({
-            key: 'enemigoDerecha',
-            frames: this.anims.generateFrameNumbers('enemigo', { start: 0, end: 3 }), // Ajusta los frames
-            frameRate: 10,
-            repeat: -1
-        });
-        
-        this.anims.create({
-            key: 'enemigoIzquierda',
-            frames: this.anims.generateFrameNumbers('enemigo', { start: 4, end: 7 }), // Ajusta los frames
-            frameRate: 10,
-            repeat: -1
-        });
-
-        
+       this.anims.create({
+        key: 'enemigoDerecha',
+        frames: this.anims.generateFrameNumbers('enemigo', { start: 0, end: 3 }), // Ajusta los frames
+        frameRate: 10,
+        repeat: -1
+    });
+    
+    this.anims.create({
+        key: 'enemigoIzquierda',
+        frames: this.anims.generateFrameNumbers('enemigo', { start: 4, end: 7 }), // Ajusta los frames
+        frameRate: 10,
+        repeat: -1
+    });
+    
+    
         // Habilitar colisiones entre el jugador y todas las capas
         this.physics.add.collider(this.jugador, capa2);
         this.physics.add.collider(this.jugador, capa3);
@@ -168,6 +161,22 @@ export default class Part2 extends Phaser.Scene {
                     volume:0.4
                 });
                 console.log("puntaje:", this.puntaje); // Muestra el puntaje en la consola
+            
+            }
+
+            if (tile?.properties?.Perla) {
+                this.puntaje += 50; // Suma 10 puntos por cada diamante
+                capa5.removeTileAt(tile.x, tile.y); // Elimina el diamante del mapa
+                capa5.removeTileAt(tile.x+1, tile.y+1); // Elimina el diamante del mapa
+                capa5.removeTileAt(tile.x-1, tile.y-1); // Elimina el diamante del mapa
+                capa5.removeTileAt(tile.x+1, tile.y-1); // Elimina el diamante del mapa
+                this.musica.play({
+                    loop: false,
+                    volume:0.4
+                });
+                this.jugador.x = 3833;
+                this.jugador.y = 1170;
+                this.tesoro++;
             
             }
 
@@ -190,8 +199,8 @@ export default class Part2 extends Phaser.Scene {
                  const ctx = canvas.getContext("2d");
              
                  // Ajustar tamaño si no se define en CSS
-                 canvas.width = 800; // Ajusta según el tamaño que necesites
-                 canvas.height = 600;
+                 canvas.width = 1500; // Ajusta según el tamaño que necesites
+                 canvas.height = 800;
              
                  // Ocultar elementos HUD
                  
@@ -199,19 +208,28 @@ export default class Part2 extends Phaser.Scene {
                  document.getElementById("vidas-container").style.display = "none";
                  document.getElementById("btnPausa").style.display = "none";
              
-                 // Crear y cargar la imagen
-                 const imagen = new Image();
-                 imagen.src = "/assets/felicidades.png"; // Verifica que esta ruta es correcta
-                 console.log("Cargando imagen desde:", imagen.src);
+                // Crear y cargar la imagen
+                const imagen = new Image();
+                imagen.src = "/assets/gano.png"; // Verifica que esta ruta es correcta
+                console.log("Cargando imagen desde:", imagen.src);
+
+                const nombre=this.jugadorActivo.alias;
+
+                imagen.onload = function () {
+                    console.log("Imagen cargada correctamente");
+                    ctx.drawImage(imagen, 0, 0, canvas.width, canvas.height);
+                    // Configuración del texto
+                    ctx.font = "100px 'Jersey 10', 'sans-serif'";
+                    ctx.fillStyle = "white";
+                    ctx.textAlign = "center";
+                    // Dibujar el nombre del jugador en el centro
+                    ctx.fillText(nombre, canvas.width / 2,80);
+
+                };
              
-                 imagen.onload = function () {
-                     console.log("Imagen cargada correctamente");
-                     ctx.drawImage(imagen, 0, 0, canvas.width, canvas.height);
-                 };
-             
-                 imagen.onerror = function () {
-                     console.error("Error al cargar la imagen. Verifica la ruta:", imagen.src);
-                 };
+                imagen.onerror = function () {
+                    console.error("Error al cargar la imagen. Verifica la ruta:", imagen.src);
+                };
                  this.guardarInfo();
             }
 
@@ -223,42 +241,75 @@ export default class Part2 extends Phaser.Scene {
         this.cursors.space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); // Tecla de espacio para saltar
     }
 
-    guardarInfo(){
-        document.getElementById("puntaje-container").textContent ="Puntuaje final "+this.puntaje;
+    crearAnimaciones(skin) {
+        // Animaciones para la skin seleccionada
+        this.anims.create({
+            key: 'left-' + skin,
+            frames: this.anims.generateFrameNumbers(skin, { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
 
+        this.anims.create({
+            key: 'turn-' + skin,
+            frames: [{ key: skin, frame: 4 }],
+            frameRate: 20
+        });
+
+        this.anims.create({
+            key: 'right-' + skin,
+            frames: this.anims.generateFrameNumbers(skin, { start: 5, end: 8 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        
+        
+    }    
+
+    guardarInfo(){
+        document.getElementById("puntaje-container").textContent = "Puntuaje final " + this.puntaje;
+    
         const guardarJugador = {
-            alias: this.jugadorActivo ,
+            alias: this.jugadorActivo.alias,
             fecha: new Date().toLocaleDateString("es-ES").replace(/\//g, "-"),
             vidas: 3,
             nivelJuego: 2,
-            puntuacionNivel1: this.puntaje,
-            puntuacionNivel2:0,
-            trofeos: this.trofeos,
+            puntuacionNivel1: this.jugadorActivo.puntuacionNivel1,
+            puntuacionNivel2: this.puntaje,
+            trofeos: this.jugadorActivo.trofeos + this.tesoro,
             skin: this.jugadorActivo.skin,
             intentos: this.jugadorActivo.intentos,
-            activo: false
+            activo: true
         };
-
+    
         const jugadores = JSON.parse(localStorage.getItem("jugadores")) || [];
-
-    // Buscar al jugador activo
+    
+        // Buscar al jugador activo
         const jugadorActivoIndex = jugadores.findIndex(jugador => jugador.activo === true);
-
+    
         if (jugadorActivoIndex !== -1) {
+            // Obtener el jugador existente
+            let jugadorExistente = jugadores[jugadorActivoIndex];
+    
+            // Comparar y almacenar siempre la puntuación más alta
+            guardarJugador.puntuacionNivel1 = Math.max(this.jugadorActivo.puntuacionNivel1);
+            guardarJugador.puntuacionNivel2 = Math.max(jugadorExistente.puntuacionNivel2, this.puntaje);
+    
             // Actualizar la información del jugador activo
-            jugadores[jugadorActivoIndex] = { ...jugadores[jugadorActivoIndex], ...guardarJugador };
-
+            jugadores[jugadorActivoIndex] = { ...jugadorExistente, ...guardarJugador };
+    
             // Guardar los cambios en el localStorage
             localStorage.setItem("jugadores", JSON.stringify(jugadores));
-
+    
             console.log("Información del jugador activo actualizada correctamente:", jugadores[jugadorActivoIndex]);
         } else {
             console.log("No se encontró un jugador activo.");
         }
     }
+    
 
     update() {
-        
 
         this.moverEnemigo();
         // Reiniciar la velocidad en el eje X antes de asignarla
@@ -274,21 +325,21 @@ export default class Part2 extends Phaser.Scene {
 
         // Movimiento horizontal
         if (this.cursors.left.isDown) {
-            this.jugador.setVelocityX(-1500);
-            this.jugador.anims.play('left', true);
+            this.jugador.setVelocityX(-350);
+            this.jugador.anims.play('left-' + (this.jugadorActivo.skin == 1 ? 'jugador' : 'otra-skin'), true);
         } 
         else if (this.cursors.right.isDown) {
-            this.jugador.setVelocityX(1500);
-            this.jugador.anims.play('right', true);
+            this.jugador.setVelocityX(350);
+            this.jugador.anims.play('right-' + (this.jugadorActivo.skin == 1 ? 'jugador' : 'otra-skin'), true);
         } 
         else {
-            this.jugador.anims.play('turn');
+            this.jugador.anims.play('turn-' + (this.jugadorActivo.skin == 1 ? 'jugador' : 'otra-skin'), true);
         }
 
         // Salto
         if ((this.cursors.up.isDown || this.cursors.space.isDown) && this.jugador.body.blocked.down) {
             setTimeout(() => {
-                this.jugador.setVelocityY(-1500);
+                this.jugador.setVelocityY(-450);
             }, 50);
         }
         this.actualizarHUD();
@@ -297,14 +348,7 @@ export default class Part2 extends Phaser.Scene {
     moverEnemigo() {
         // Mover al enemigo en el eje X
         this.enemigo.setVelocityX(100 * this.direccionEnemigo);
-    
-        // Reproducir la animación correcta según la dirección
-        if (this.direccionEnemigo > 0) {
-            this.enemigo.anims.play('enemigoDerecha', true); // Animación caminando a la derecha
-        } else {
-            this.enemigo.anims.play('enemigoIzquierda', true); // Animación caminando a la izquierda
-        }
-    
+
         // Si el enemigo choca con un obstáculo, intenta saltar
         if (this.enemigo.body.blocked.right || this.enemigo.body.blocked.left) {
             if (this.intentosSaltoEnemigo < 3) {
@@ -312,15 +356,15 @@ export default class Part2 extends Phaser.Scene {
                     this.enemigo.setVelocityY(-500); // Saltar en Y
                     this.enemigo.setVelocityX(this.direccionEnemigo * 400); 
                 }, 70);
+                // Moverse más en X durante el salto
                 this.intentosSaltoEnemigo++;
             } else {
-                // Cambiar dirección después de 3 intentos fallidos
-                this.direccionEnemigo *= -1;
-                this.intentosSaltoEnemigo = 0;
+                // Si no puede saltar después de 3 intentos, cambiar de dirección
+                this.direccionEnemigo *= -1; // Cambiar dirección
+                this.intentosSaltoEnemigo = 0; // Reiniciar contador de intentos
             }
         }
     }
-    
 
     actualizarHUD(){
         if(this.vidas == 0){
@@ -359,7 +403,34 @@ export default class Part2 extends Phaser.Scene {
             }
             // Actualizar puntaje
             document.getElementById("Puntaje").textContent = this.puntaje;
-            document.getElementById("Nombre").textContent = this.jugadorActivo.alias;
+            document.getElementById("Nombre").innerHTML = this.jugadorActivo.alias + "<br>Fecha: " + this.jugadorActivo.fecha;
+        }
+    }
+
+    moverEnemigo() {
+        // Mover al enemigo en el eje X
+        this.enemigo.setVelocityX(100 * this.direccionEnemigo);
+    
+        // Reproducir la animación correcta según la dirección
+        if (this.direccionEnemigo > 0) {
+            this.enemigo.anims.play('enemigoDerecha', true); // Animación caminando a la derecha
+        } else {
+            this.enemigo.anims.play('enemigoIzquierda', true); // Animación caminando a la izquierda
+        }
+    
+        // Si el enemigo choca con un obstáculo, intenta saltar
+        if (this.enemigo.body.blocked.right || this.enemigo.body.blocked.left) {
+            if (this.intentosSaltoEnemigo < 3) {
+                setTimeout(() => {
+                    this.enemigo.setVelocityY(-500); // Saltar en Y
+                    this.enemigo.setVelocityX(this.direccionEnemigo * 400); 
+                }, 70);
+                this.intentosSaltoEnemigo++;
+            } else {
+                // Cambiar dirección después de 3 intentos fallidos
+                this.direccionEnemigo *= -1;
+                this.intentosSaltoEnemigo = 0;
+            }
         }
     }
 

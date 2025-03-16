@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/x-icon" href="/assets/minecraftDot.ico">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/estilos.css">  
@@ -39,7 +41,7 @@
                     let x = 250;  // Mover más a la izquierda para aprovechar el canvas
                     let y = 120;
                     let rowHeight = 60;  // Aumentar la altura de las filas
-                    let columnWidths = [200, 200, 150, 150, 150, 200]; // Tamaños de columnas
+                    let columnWidths = [200, 200, 150, 150, 200]; // Tamaños de columnas
 
                     ctx.font = "bold 26px Doto, sans-serif"; // Ajustar tamaño de fuente
                     ctx.textAlign = "center";
@@ -49,7 +51,7 @@
                     ctx.fillRect(x, y - 40, 1050, 50);
                     ctx.fillStyle = "black";
 
-                    let headers = ["Alias", "Fecha", "Nivel 1", "Nivel 2", "Tesoros", "Total"];
+                    let headers = ["Alias", "Fecha", "Intentos", "Tesoros", "Total"];
                     let colX = x;
 
                     headers.forEach((header, index) => {
@@ -76,7 +78,7 @@
                             let totalPuntos = record.puntuacionNivel1 + record.puntuacionNivel2;
                             let valores = [
                                 record.alias, record.fecha, 
-                                record.puntuacionNivel1, record.puntuacionNivel2, 
+                                record.intentos,
                                 record.trofeos, totalPuntos
                             ];
 
@@ -90,27 +92,22 @@
                         });
                     }
                 }
-
-                function regresarNormal() {
-                    window.location.href = "menu.html";
-                }
-
-                function verificarCampos() {
-                    window.location.href = "menu.html";
-                }
             </script>            
         </div>
-
         <div class="get2">
             <div class="btn1">
                 <button id="back" onclick="regresarNormal()">
-                    <img src="/assets/bt1B.png" alt="Imagen del botón" />
-                </button>
-                <button id="next" onclick="verificarCampos()">
-                    <img src="/assets/ntn1.png" alt="Imagen del botón" />
+                    <img src="/assets/bAtras.png" alt="Imagen del botón" />
                 </button>
             </div>
         </div>
+
+        
     </div>
+    <script>
+        function regresarNormal(){
+            history.back();
+        }
+    </script>
 </body>
 </html>

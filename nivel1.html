@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nivel 1 Roblox 2.3</title>
-    
+    <title>Nivel 1 </title>
+    <link rel="icon" type="image/x-icon" href="/assets/minecraftDot.ico">
+
     <!-- Phaser -->
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js"></script>
     
@@ -12,53 +13,75 @@
     <link rel="stylesheet" href="/styles/estilos-niv-1.css">  
     
     <!-- Fuentes -->
-    <link href="https://fonts.googleapis.com/css2?family=Yuji+Mai&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
+
 <body class="fondoN1">
+
     <audio id="musica" loop>
         <source src="/assets/musica.wav" type="audio/wav">
     </audio>
 
     <section class="contenedor">
-        <div class="wid2">
-            <h1>NIVEL 1</h1>
-        </div>
 
         <div class="wid1">
-            <img src="/assets/minecraftDot.png">
-        </div>
-
-        <div class="wid3">
-            <h2>Strawberry Shortcake VS Blackberries</h2>
+            <img class="logo" src="/assets/STRAW-BERRYSHORTCAKE.png">
+            
         </div>
 
         <!-- Canvas de Phaser -->
-        <div class="canvas-container">
+        <div class="canvas-container" id="phaser-game">
             <canvas id="gameCanvas"></canvas>
+            <canvas id="imagenPerder" style="display: none;"></canvas>
+            <canvas id="imagenCanvas" style="display: none;"></canvas>
         </div>
 
-        <!-- Canvas de imágenes -->
-        <div class="imagenCanva">
-            <canvas id="imagenCanvas" style="display: none;"></canvas> 
-        </div>
-        <div class="imagenPerd">
-            <canvas id="imagenPerder" style="display: none;"></canvas>
-        </div>
         
         <!-- HUD -->
         <div class="hud">
+            <div id="nombre-container"><h1>Jugador:</h1><p id="Nombre"></p></div>
             <div id="puntaje-container"><h1>Puntaje:</h1><p id="Puntaje">0</p></div>
             <div id="vidas-container">Vidas: </div>
-            <div id="nombre-container"><h1>Jugador:</h1><p id="Nombre"></p></div>
 
-            <div>
-                <button id="btnOcultarHUD" style="display: none;">Siguiente Nivel!</button> 
+            <div class="musica_a">
                 <img id="btnMusica" src="/assets/sonido-desactivado.png" alt="Controlar Música" style="cursor: pointer;">
                 <img id="btnPausa" src="/assets/settings.png" alt="Configurar" style="cursor: pointer;">
             </div>
-        </div>
-    </section>
 
+        </div>
+
+        <div class="btn1">
+            <button id="back" onclick="regresarNormal()">
+                
+                <img src="/assets/_atras_15_3_2025 (1).png" alt="Imagen del botón" />
+            </button>
+
+            <button id="btnOcultarHUD">
+                <img src="/assets/bSig.png" alt="Imagen del botón"/>
+            </button>
+        </div>
+
+    </section>
+    <script>
+        function regresarNormal(){
+            const jugadores = JSON.parse(localStorage.getItem("jugadores")) || [];
+            // Actualizar todas las entidades donde activo es true
+            const jugadoresActualizados = jugadores.map(jugador => {
+                if (jugador.activo === true) {
+                    return { ...jugador, activo: false }; // Cambiar activo a false
+                }
+                return jugador; // Si no es true, devolver el jugador sin cambios
+            });
+
+            // Guardar los cambios en el localStorage
+            localStorage.setItem("jugadores", JSON.stringify(jugadoresActualizados));
+            history.back();
+        }
+        function verificarCampos(){
+            window.location.href = 'nivel2.html';
+        }
+            </script>
     <script id="scene" type="module" src="js/setts.js" data-scene="Part1"></script>
 </body>
 </html>

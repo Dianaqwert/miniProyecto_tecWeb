@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,14 +7,14 @@
     <link rel="stylesheet" href="/styles/estilos.css">  
     <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Doto:wght@900&display=swap" rel="stylesheet">
-    <title>Instrucciones nivel 2</title>
+    <title>Instrucciones nivel 1</title>
     <link rel="icon" type="image/x-icon" href="/assets/minecraftDot.ico">
 
 </head>
 <body class="fondo_canvas_1">
     <div class="contenedor_canvas2">
         <div class="get1">
-            <img src="/assets/INSTRUCCIONES-NIVEL-DOS.png">
+            <img src="/assets/instN1_.png">
         </div>
 
         <div class="_canva" id="phaser-game">
@@ -25,7 +26,9 @@
                 <button id="back" onclick="regresarNormal()">
                     <img src="/assets/bAtras.png" alt="Imagen del botón" />
                 </button>
-                <button id="next" onclick="sigHTML()">
+            </div>
+            <div class="btn1">
+                <button id="back" onclick="iniciarJuego1()">
                     <img src="/assets/bSig.png" alt="Imagen del botón" />
                 </button>
             </div>
@@ -48,22 +51,20 @@
             "      Controles:",
             "Para moverte utiliza",
             "las flechas de tu teclado.",
+            "",
             "Para saltar utiliza la tecla",
             "espacio de tu teclado.",
             "",
-            "Objetivos del nivel 2:",
-                "Tu objetivo es el mismo que",
-                "el nivel 1, llega al portal",
-                "de salida recolectando",
-                "la mayor cantidad de fresitas.",
-                "",
-                "Ten cuidado con la lava y de ",
-                "no caer de las plataformas.",
-                "Tu enemigo es SHREK,",
-                "te va a intentar alcanzar.",
-                "Escapa a toda costa y",
-                "recolecta los tesoros para",
-                "obtener mas puntos.",
+            "      Objetivos del nivel 1:",
+            "Tu objetivo es llegar al",
+            "portal de salida recolectando",
+            "la mayor cantidad de fresitas",
+            "",
+            "Ten cuidado con la lava y",
+            "de no caerte de las",
+            "plataformas.",
+            "Recolecta los tesoros",
+            "para obtener mas puntos."
         ];
 
         // Primera imagen (Izquierda)
@@ -77,7 +78,7 @@
 
         // Primera imagen (derecha)
         const imagenDerecha = new Image();
-        imagenDerecha.src = "/assets/cred_2.png";
+        imagenDerecha.src = "/assets/inst_1_.png";
 
         imagenDerecha.onload = function() {
             ctx.drawImage(imagenDerecha, 800, 50, imagenDerecha.width, imagenDerecha.height);
@@ -99,13 +100,15 @@
         }
 
     };
+    //funcion de retorno
     function regresarNormal(){
         history.back();
     }
-    
-    
-    function sigHTML(){
-        window.location.href = "menu.html";
+
+    //funcionde inicio del juego
+    function iniciarJuego1(){
+        window.location.href = 'nivel1.html';
     }
 </script>            
 </html>
+=======

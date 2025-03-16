@@ -1,7 +1,5 @@
 const jugadores = JSON.parse(localStorage.getItem("jugadores")) || []; //localstorage
 
-
-
 // Función para encontrar al jugador activo
 function obtenerJugadorActivo() {
     // Obtener los jugadores del localStorage
@@ -43,16 +41,16 @@ export default class Part1 extends Phaser.Scene {
     preload() {
         this.load.image("background", "assets/nivel 1/background.png"); // Precargar la imagen
         this.load.audio('musicaFondo', '/assets/pop.mp3');
-        this.load.spritesheet('jugador', 'assets/nivel 2/rosita.png', {
+        this.load.spritesheet('jugador', 'assets/rosita2.png', {
             frameWidth: 33, // Ancho de cada frame
             frameHeight: 89 // Altura de cada frame
         });
-        this.load.spritesheet('jugador-Rosita', 'assets/nivel 2/rosita.png', {
+        this.load.spritesheet('otra-skin', 'assets/rosita.png', {
             frameWidth: 33, // Ancho de cada frame
             frameHeight: 89 // Altura de cada frame
         });
         
-        this.load.image("bloques", "assets/nivel 2/bloques.png");
+        this.load.image("bloques", "assets/nivel 1/bloques.png");
         this.load.tilemapTiledJSON('tilemap', 'assets/nivel 1/mapa-1.json');
 
     }
@@ -63,10 +61,21 @@ export default class Part1 extends Phaser.Scene {
             this.scene.pause(); // Pausar la escena principal
             this.scene.launch('PauseScene'); // Lanzar la escena de pausa
         });
+        console.log("NIVEL JUEGO: "+this.jugadorActivo.nivelJuego);
+
         this.btnFinal.addEventListener('click', () => {
-            console.log("Pausa");
-            window.location.href = 'nivel2.html';
+            if(this.jugadorActivo.nivelJuego == 1){
+                swal({
+                    title:"Error",
+                    text: "No puedes pasar al siguiente nive, sin pasar este nivel 1ero!!",
+                    icon: "warning",
+                    button: "Ok",
+                });        
+            }else{
+                window.location.href = 'nivel2.html';
+            }
         });
+
         this.musica = this.sound.add('musicaFondo');
         // fondo.alpha = .15;
         this.physics.world.setBounds(0, 0, 9000, 5200); // Establecer límites del mundo del juego
@@ -103,12 +112,15 @@ export default class Part1 extends Phaser.Scene {
        
     
         // Crear jugador y agregar física
-        if(this.jugadorActivo==1){
+        if (this.jugadorActivo.skin == 1) {
+            console.log("Skin 1");
             this.jugador = this.physics.add.sprite(200, 3331, "jugador");
-        }else{
-            this.jugador = this.physics.add.sprite(200, 3331, "jugador-Rosita");
+            this.crearAnimaciones('jugador'); // Crear animaciones para la skin 1
+        } else {
+            console.log("Skin 2");
+            this.jugador = this.physics.add.sprite(200, 3331, "otra-skin");
+            this.crearAnimaciones('otra-skin'); // Crear animaciones para la skin 2
         }
-
         // this.jugador.setScale()
         this.jugador.setCollideWorldBounds(true); // Evita que salga de los límites del juego
         
@@ -117,27 +129,6 @@ export default class Part1 extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, 9000, 5000);
         this.cameras.main.startFollow(this.jugador);
         this.cameras.main.setZoom(0.8); // Reduce el zoom de la cámara
-        
-        // Crear animaciones del jugador
-        this.anims.create({
-            key: 'left',
-            frames: this.anims.generateFrameNumbers('jugador', { start: 0, end: 3 }),
-            frameRate: 10,
-            repeat: -1
-        });
-    
-        this.anims.create({
-            key: 'turn',
-            frames: [{ key: 'jugador', frame: 4 }],
-            frameRate: 20
-        });
-    
-        this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers('jugador', { start: 5, end: 8 }),
-            frameRate: 10,
-            repeat: -1
-        });
     
         // Habilitar colisiones entre el jugador y todas las capas
         this.physics.add.collider(this.jugador, capa2);
@@ -168,7 +159,7 @@ export default class Part1 extends Phaser.Scene {
                 console.log("puntaje:", this.puntaje); // Muestra el puntaje en la consola
             }
             if (tile?.properties?.Perla) {
-                this.puntaje += 10; // Suma 10 puntos por cada diamante
+                this.puntaje += 50; // Suma 10 puntos por cada diamante
                 capa5.removeTileAt(tile.x, tile.y); // Elimina el diamante del mapa
                 capa5.removeTileAt(tile.x+1, tile.y+1); // Elimina el diamante del mapa
                 capa5.removeTileAt(tile.x-1, tile.y-1); // Elimina el diamante del mapa
@@ -186,6 +177,7 @@ export default class Part1 extends Phaser.Scene {
 
         this.physics.add.collider(this.jugador, capa1, (jugador, tile) => {
             if (tile?.properties?.Fin) {
+                this.jugadorActivo.nivelJuego++;
                 console.log("AQUIIII")
                  // Obtener el elemento canvas y su contexto 2D
                  document.getElementById("gameCanvas").style.display = "none";
@@ -203,9 +195,7 @@ export default class Part1 extends Phaser.Scene {
                  // Ocultar elementos HUD
                  document.getElementById("nombre-container").style.display = "none";
                  document.getElementById("vidas-container").style.display = "none";
-                 document.getElementById("btnPausa").style.display = "none";
-                 document.getElementById("btnOcultarHUD").style.display = "block"; // Se oculta el botón para evitar doble clic
-             
+                 document.getElementById("btnPausa").style.display = "none";             
                  // Crear y cargar la imagen
                  const imagen = new Image();
                  imagen.src = "/assets/passNivel.png"; // Verifica que esta ruta es correcta
@@ -234,6 +224,28 @@ export default class Part1 extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
         this.cursors.space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); // Tecla de espacio para saltar
     }
+    crearAnimaciones(skin) {
+        // Animaciones para la skin seleccionada
+        this.anims.create({
+            key: 'left-' + skin,
+            frames: this.anims.generateFrameNumbers(skin, { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'turn-' + skin,
+            frames: [{ key: skin, frame: 4 }],
+            frameRate: 20
+        });
+
+        this.anims.create({
+            key: 'right-' + skin,
+            frames: this.anims.generateFrameNumbers(skin, { start: 5, end: 8 }),
+            frameRate: 10,
+            repeat: -1
+        });
+    }
 
     update() {
 
@@ -244,24 +256,25 @@ export default class Part1 extends Phaser.Scene {
             this.jugador.y= 3200;
         }
         this.jugador.setVelocityX(0);
-
+        
+        
         // Movimiento horizontal
         if (this.cursors.left.isDown) {
-            this.jugador.setVelocityX(-1500);
-            this.jugador.anims.play('left', true);
+            this.jugador.setVelocityX(-350);
+            this.jugador.anims.play('left-' + (this.jugadorActivo.skin == 1 ? 'jugador' : 'otra-skin'), true);
         } 
         else if (this.cursors.right.isDown) {
-            this.jugador.setVelocityX(1500);
-            this.jugador.anims.play('right', true);
+            this.jugador.setVelocityX(350);
+            this.jugador.anims.play('right-' + (this.jugadorActivo.skin == 1 ? 'jugador' : 'otra-skin'), true);
         } 
         else {
-            this.jugador.anims.play('turn');
+            this.jugador.anims.play('turn-' + (this.jugadorActivo.skin == 1 ? 'jugador' : 'otra-skin'), true);
         }
 
         // Salto
         if ((this.cursors.up.isDown || this.cursors.space.isDown) && this.jugador.body.blocked.down) {
             setTimeout(() => {
-                this.jugador.setVelocityY(-1500);
+                this.jugador.setVelocityY(-485);
             }, 50);
         }
         this.actualizarHUD();
@@ -281,7 +294,7 @@ export default class Part1 extends Phaser.Scene {
         
             // Ajustar el tamaño del canvas si es necesario
             canvas.width = 1500; // Ajusta según el tamaño que necesites
-            canvas.height = 700;
+            canvas.height = 800;
         
             // Ocultar los elementos del HUD
             document.getElementById("puntaje-container").style.display = "none";
@@ -307,38 +320,46 @@ export default class Part1 extends Phaser.Scene {
             }
             // Actualizar puntaje
             document.getElementById("Puntaje").textContent = this.puntaje;
-            document.getElementById("Nombre").textContent = this.jugadorActivo.alias;
+            document.getElementById("Nombre").innerHTML = this.jugadorActivo.alias + "<br>Fecha: " + this.jugadorActivo.fecha;
         }
         
     }
 
     guardarInfo(){
-        document.getElementById("puntaje-container").textContent ="Puntuaje final "+this.puntaje;
-
+        document.getElementById("puntaje-container").textContent = "Puntuaje final " + this.puntaje;
+    
         const guardarJugador = {
-            alias: this.jugadorActivo ,
+            alias: this.jugadorActivo.alias,
             fecha: new Date().toLocaleDateString("es-ES").replace(/\//g, "-"),
             vidas: 3,
             nivelJuego: 2,
-            puntuacionNivel1: this.jugadorActivo.puntuacionNivel1,
-            puntuacionNivel2:this.puntaje,
-            trofeos: this.jugadorActivo.trofeos +this.trofeos,
+            puntuacionNivel1: this.puntaje,
+            puntuacionNivel2: 0,
+            trofeos: this.tesoro,
             skin: this.jugadorActivo.skin,
             intentos: this.jugadorActivo.intentos,
             activo: true
         };
+    
         const jugadores = JSON.parse(localStorage.getItem("jugadores")) || [];
-
-    // Buscar al jugador activo
+    
+        // Buscar al jugador activo
         const jugadorActivoIndex = jugadores.findIndex(jugador => jugador.activo === true);
-
+    
         if (jugadorActivoIndex !== -1) {
+            // Obtener el jugador existente
+            let jugadorExistente = jugadores[jugadorActivoIndex];
+    
+            // Comparar y almacenar siempre la puntuación más alta
+            guardarJugador.puntuacionNivel1 = Math.max(jugadorExistente.puntuacionNivel1, this.jugadorActivo.puntuacionNivel1);
+            guardarJugador.puntuacionNivel2 = Math.max(jugadorExistente.puntuacionNivel2, this.puntaje);
+    
             // Actualizar la información del jugador activo
-            jugadores[jugadorActivoIndex] = { ...jugadores[jugadorActivoIndex], ...guardarJugador };
-
+            jugadores[jugadorActivoIndex] = { ...jugadorExistente, ...guardarJugador };
+    
             // Guardar los cambios en el localStorage
             localStorage.setItem("jugadores", JSON.stringify(jugadores));
-
+    
             console.log("Información del jugador activo actualizada correctamente:", jugadores[jugadorActivoIndex]);
         } else {
             console.log("No se encontró un jugador activo.");
