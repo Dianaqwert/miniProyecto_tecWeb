@@ -43,7 +43,11 @@ export default class Part1 extends Phaser.Scene {
     preload() {
         this.load.image("background", "assets/nivel 1/background.png"); // Precargar la imagen
         this.load.audio('musicaFondo', '/assets/pop.mp3');
-        this.load.spritesheet('jugador', 'assets/nivel 2/shrek2.png', {
+        this.load.spritesheet('jugador', 'assets/nivel 2/rosita.png', {
+            frameWidth: 33, // Ancho de cada frame
+            frameHeight: 89 // Altura de cada frame
+        });
+        this.load.spritesheet('jugador-Rosita', 'assets/nivel 2/rosita.png', {
             frameWidth: 33, // Ancho de cada frame
             frameHeight: 89 // Altura de cada frame
         });
@@ -99,7 +103,11 @@ export default class Part1 extends Phaser.Scene {
        
     
         // Crear jugador y agregar física
-        this.jugador = this.physics.add.sprite(200, 3331, "jugador");
+        if(this.jugadorActivo==1){
+            this.jugador = this.physics.add.sprite(200, 3331, "jugador");
+        }else{
+            this.jugador = this.physics.add.sprite(200, 3331, "jugador-Rosita");
+        }
 
         // this.jugador.setScale()
         this.jugador.setCollideWorldBounds(true); // Evita que salga de los límites del juego

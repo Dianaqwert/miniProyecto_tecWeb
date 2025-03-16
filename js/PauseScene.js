@@ -72,7 +72,25 @@ export default class PauseScene extends Phaser.Scene {
         quitButton.on('pointerdown', () => {
             this.scene.stop(this.escena);
             this.scene.stop('PauseScene');
-            window.location.href = 'seleccion-nivel.html';
+            desactivarTodosJugadores();
+            window.location.href = 'menu.html';
         });
     }
 }
+
+function desactivarTodosJugadores() {
+    // Obtener los jugadores del localStorage
+    const jugadores = JSON.parse(localStorage.getItem("jugadores")) || [];
+
+    // Actualizar el atributo "activo" de todas las entidades a false
+    const jugadoresActualizados = jugadores.map(jugador => {
+        return { ...jugador, activo: false }; // Usamos el spread operator para mantener los demás atributos intactos
+    });
+
+    // Guardar los cambios en el localStorage
+    localStorage.setItem("jugadores", JSON.stringify(jugadoresActualizados));
+
+    console.log("Todos los jugadores han sido desactivados.");
+}
+
+// Llamar a la función

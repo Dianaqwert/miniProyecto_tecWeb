@@ -23,7 +23,7 @@
                 <button id="back" onclick="regresarNormal()">
                     <img src="/assets/bAtras.png" alt="Imagen del botón" />
                 </button>
-                <button id="next">
+                <button id="next" onclick="sigHTML()">
                     <img src="/assets/bSig.png" alt="Imagen del botón" />
                 </button>
             </div>
@@ -99,6 +99,11 @@
     };
     function regresarNormal(){
         history.back();
+    }
+    
+    
+    function sigHTML(){
+        window.location.href = "menu.html";
     }
 </script>            
 </html>

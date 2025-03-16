@@ -37,12 +37,15 @@ export default class Part2 extends Phaser.Scene {
     preload() {
         this.load.audio('musicaFondo', '/assets/pop.mp3');
         this.load.image("bg", "/assets/nivel 2/background.png");
-        this.load.spritesheet('jugador', 'assets/nivel 2/shrek2.png', {
+        this.load.spritesheet('jugador', 'assets/rosita2.png', {
             frameWidth: 33, // Ancho de cada frame
             frameHeight: 89 // Altura de cada frame
         });
         
-        this.load.spritesheet("enemigo","assets/nivel 2/jugador.png",{frameWidth:48.4,frameHeigth:50});
+        this.load.spritesheet('enemigo', 'assets/nivel 2/shrek2.png', {
+            frameWidth: 33, // Ancho de cada frame
+            frameHeight: 89 // Altura de cada frame
+        });
         this.load.image("bloques", "assets/nivel 2/bloques.png");
         this.load.tilemapTiledJSON('tilemap', 'assets/nivel 2/nivelRene.json');
         this.puntaje = 0; // Inicializa el puntaje
@@ -132,7 +135,23 @@ export default class Part2 extends Phaser.Scene {
             frameRate: 10,
             repeat: -1
         });
-    
+        
+
+        this.anims.create({
+            key: 'enemigoDerecha',
+            frames: this.anims.generateFrameNumbers('enemigo', { start: 0, end: 3 }), // Ajusta los frames
+            frameRate: 10,
+            repeat: -1
+        });
+        
+        this.anims.create({
+            key: 'enemigoIzquierda',
+            frames: this.anims.generateFrameNumbers('enemigo', { start: 4, end: 7 }), // Ajusta los frames
+            frameRate: 10,
+            repeat: -1
+        });
+
+        
         // Habilitar colisiones entre el jugador y todas las capas
         this.physics.add.collider(this.jugador, capa2);
         this.physics.add.collider(this.jugador, capa3);
@@ -278,7 +297,14 @@ export default class Part2 extends Phaser.Scene {
     moverEnemigo() {
         // Mover al enemigo en el eje X
         this.enemigo.setVelocityX(100 * this.direccionEnemigo);
-
+    
+        // Reproducir la animación correcta según la dirección
+        if (this.direccionEnemigo > 0) {
+            this.enemigo.anims.play('enemigoDerecha', true); // Animación caminando a la derecha
+        } else {
+            this.enemigo.anims.play('enemigoIzquierda', true); // Animación caminando a la izquierda
+        }
+    
         // Si el enemigo choca con un obstáculo, intenta saltar
         if (this.enemigo.body.blocked.right || this.enemigo.body.blocked.left) {
             if (this.intentosSaltoEnemigo < 3) {
@@ -286,15 +312,15 @@ export default class Part2 extends Phaser.Scene {
                     this.enemigo.setVelocityY(-500); // Saltar en Y
                     this.enemigo.setVelocityX(this.direccionEnemigo * 400); 
                 }, 70);
-                // Moverse más en X durante el salto
                 this.intentosSaltoEnemigo++;
             } else {
-                // Si no puede saltar después de 3 intentos, cambiar de dirección
-                this.direccionEnemigo *= -1; // Cambiar dirección
-                this.intentosSaltoEnemigo = 0; // Reiniciar contador de intentos
+                // Cambiar dirección después de 3 intentos fallidos
+                this.direccionEnemigo *= -1;
+                this.intentosSaltoEnemigo = 0;
             }
         }
     }
+    
 
     actualizarHUD(){
         if(this.vidas == 0){

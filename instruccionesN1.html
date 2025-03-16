@@ -24,7 +24,7 @@
                 <button id="back" onclick="regresarNormal()">
                     <img src="/assets/bAtras.png" alt="Imagen del botón" />
                 </button>
-                <button id="next">
+                <button id="next" onclick="siguiente()">
                     <img src="/assets/bSig.png" alt="Imagen del botón" />
                 </button>
             </div>
@@ -98,6 +98,9 @@
     };
     function regresarNormal(){
         history.back();
+    }
+    function siguiente(){
+        window.location.href = "instruccionesN2.html";
     }
 </script>            
 </html>

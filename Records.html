@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/estilos.css">  
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@900&display=swap" rel="stylesheet">
+    <title>Records</title>
+</head>
+<body class="fondo_canvas_1">
+    <div class="contenedor_canvas2">
+        <div class="get1">
+            <img src="/assets/Records-.png">
+        </div>
+
+        <div class="_canva" id="phaser-game">
+            <canvas id="gameCanvas" width="1600" height="800"></canvas> <!-- Aumentar tamaño del canvas -->
+            <script>
+                const canvas = document.getElementById("gameCanvas");
+                const ctx = canvas.getContext("2d");
+
+                const imagenFondo = new Image();
+                imagenFondo.src = "/assets/imagen3.jpg"; 
+
+                imagenFondo.onload = function() {
+                    ctx.drawImage(imagenFondo, 0, 0, canvas.width, canvas.height);
+                    mostrarTablaRecords();
+                };
+
+                function mostrarTablaRecords() {
+                    let records = JSON.parse(localStorage.getItem("jugadores")) || [];
+
+                    // Ordenar por la suma total de puntuaciones
+                    records.sort((a, b) => 
+                        (b.puntuacionNivel1 + b.puntuacionNivel2) - (a.puntuacionNivel1 + a.puntuacionNivel2)
+                    );
+
+                    let x = 250;  // Mover más a la izquierda para aprovechar el canvas
+                    let y = 120;
+                    let rowHeight = 60;  // Aumentar la altura de las filas
+                    let columnWidths = [200, 200, 150, 150, 150, 200]; // Tamaños de columnas
+
+                    ctx.font = "bold 26px Doto, sans-serif"; // Ajustar tamaño de fuente
+                    ctx.textAlign = "center";
+
+                    // Dibujar encabezados
+                    ctx.fillStyle = "#F5F5DC";
+                    ctx.fillRect(x, y - 40, 1050, 50);
+                    ctx.fillStyle = "black";
+
+                    let headers = ["Alias", "Fecha", "Nivel 1", "Nivel 2", "Tesoros", "Total"];
+                    let colX = x;
+
+                    headers.forEach((header, index) => {
+                        ctx.fillText(header, colX + columnWidths[index] / 2, y);
+                        colX += columnWidths[index];
+                    });
+
+                    ctx.beginPath();
+                    ctx.moveTo(x, y + 10);
+                    ctx.lineTo(x + 1050, y + 10);
+                    ctx.stroke();
+
+                    ctx.font = "24px Doto, sans-serif"; // Reducir para que entre mejor el texto
+                    y += rowHeight;
+
+                    if (records.length === 0) {
+                        ctx.fillText("No hay registros disponibles", canvas.width / 2, y);
+                    } else {
+                        records.forEach((record, index) => {
+                            ctx.fillStyle = index % 2 === 0 ? "#F0F0F0" : "#E0E0E0";
+                            ctx.fillRect(x, y - 30, 1050, 40);
+                            
+                            ctx.fillStyle = "black";
+                            let totalPuntos = record.puntuacionNivel1 + record.puntuacionNivel2;
+                            let valores = [
+                                record.alias, record.fecha, 
+                                record.puntuacionNivel1, record.puntuacionNivel2, 
+                                record.trofeos, totalPuntos
+                            ];
+
+                            let colX = x;
+                            valores.forEach((valor, index) => {
+                                ctx.fillText(valor, colX + columnWidths[index] / 2, y);
+                                colX += columnWidths[index];
+                            });
+
+                            y += rowHeight;
+                        });
+                    }
+                }
+
+                function regresarNormal() {
+                    window.location.href = "menu.html";
+                }
+
+                function verificarCampos() {
+                    window.location.href = "menu.html";
+                }
+            </script>            
+        </div>
+
+        <div class="get2">
+            <div class="btn1">
+                <button id="back" onclick="regresarNormal()">
+                    <img src="/assets/bt1B.png" alt="Imagen del botón" />
+                </button>
+                <button id="next" onclick="verificarCampos()">
+                    <img src="/assets/ntn1.png" alt="Imagen del botón" />
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
