@@ -7,30 +7,45 @@
     <!--Phaser-->
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js"></script>
     <!--Estilos-->
-    <link rel="stylesheet" href="/styles/estilos.css">  
+    <link rel="stylesheet" href="/styles/estilos-niv-1.css">  
     <!--Fuentes-->
     <link href="https://fonts.googleapis.com/css2?family=Yuji+Mai&display=swap" rel="stylesheet">
 </head>
 <body class="fondoN1">
+    <audio id="musica" loop>
+        <source src="/assets/musica.wav" type="audio/wav">
+      </audio>
     <section class="contenedor">
-
-        <div class="wid1">
-            <img src="/assets/minecraftDot.png">
-        </div>
 
         <div class="wid2">
             <h1>NIVEL 1</h1>
+        </div>
+
+        <div class="wid1">
+            <img src="/assets/minecraftDot.png">
         </div>
 
         <div class="wid3">
             <h2>Strawberry Shortcake VS blackberries</h2>
         </div>
 
-        <div class="juego" id="phaser-game">
-            <script src="/js/part1.js"></script>
+        <div class="canvas-container">
+            <canvas id="gameCanvas"></canvas>
+          </div>
+        <div class="hud">
+            <div id="puntaje-container"><h1>Puntaje:</h1><p id="Puntaje">0</p></div>
+    
+            <div id="vidas-container">Vidas: </div>
+            <div>Jugador</div>
+            <div>
+                <img id="btnMusica" src="/assets/sonido-desactivado.png" alt="Controlar Musica" style="cursor: pointer;">
+                <img id="btnPausa" src="/assets/settings.png"lt="Controlar Musica" style="cursor: pointer;" >
+            </div>
         </div>
-
     </section>
+    <script id="scene" type="module" src="js/settings.js" data-scene="Part1"></script>
+
+
 </body>
 <footer>
 

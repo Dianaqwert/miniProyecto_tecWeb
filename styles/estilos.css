@@ -1,10 +1,8 @@
-
 *{
     padding: 0;
     margin: 0;
 }
 
-/*colores N1*/
 
 :root{
     --blanco:#FBF8EF;
@@ -18,7 +16,6 @@
     --verde2:#B3D8A8;
 }
 
-/*swal//*/
 
 /* Cambia la fuente del título */
 .swal-title {
@@ -40,7 +37,6 @@
 }
 
 
-/*grid-css*/
 .seleccionSkin {
     height: auto; 
     display: grid;
@@ -196,7 +192,6 @@ input{
 }
 
 
-/*estilos N1*/
 .contenedor img {
     width: 100%;
     height: auto;
@@ -278,9 +273,8 @@ input{
     transform: translateY(50px); 
 }
 
-/*ESTILOS DEL CANVAS DEL INICIO*/
 
-/*,,,,,,,,,,,,,,,,,,,,,,,,,,*/
+
 .contenedor_canvas{
     display: grid;
     grid-gap: 30px;
@@ -372,6 +366,7 @@ button{
 
 .btn2{
     margin-top: 20px;
+<<<<<<< HEAD
 }
 
 /*estilos de las instrucciones*/
@@ -406,3 +401,6 @@ button{
     background-size: cover
 
 }
+=======
+}
+>>>>>>> 891d0586ee6e5d476f23a989e9e17afad0ff3182
