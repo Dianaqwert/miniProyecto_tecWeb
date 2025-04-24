@@ -57,7 +57,7 @@ Este juego implementa el almacenamiento de datos del jugador utilizando **localS
 - **Control de versiones con Git y GitHub**
 
 ---
-#Autores 
+## Autores 
 Este proyecto fue desarrollado en equipo como parte del curso de Tecnologías Web.
 - Diana Gónzalez
 - Osvaldo
