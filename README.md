@@ -60,6 +60,6 @@ Este juego implementa el almacenamiento de datos del jugador utilizando **localS
 ## Autores 
 Este proyecto fue desarrollado en equipo como parte del curso de Tecnologías Web.
 - Diana Gónzalez
-- Osvaldo
+- Oswaldo Villegas
 - Rene De Anda
 
